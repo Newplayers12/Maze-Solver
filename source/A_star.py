@@ -22,6 +22,12 @@ def diagonal(Start, Goal):
     d_min = min(abs(Goal[0] - Start[0]), abs(Goal[1] - Start[1]))
     return  cost_n * (d_max - d_min) + cost_d * d_min
 
+F = {
+    'manhattan': manhattan,
+    'euclidean': euclidean,
+    'diagonal': diagonal,
+}
+
 class Node():
     def __init__(self, state, parent, action):
         self.state = state
@@ -52,7 +58,7 @@ class Node():
         self.cost = self.parent.cost + 1
 
     def updateHeuristic(self, goal, Func):
-        self.heuristic = Func(self.state, goal)
+        self.heuristic = F[Func](self.state, goal)
         
 
 class Frontier():
