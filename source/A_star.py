@@ -2,6 +2,7 @@ import sys
 import math
 from queue import PriorityQueue
 from queue import LifoQueue
+from queue import Queue
 import matplotlib.pyplot as plt
 import matplotlib.pylab as pylab
 import os
@@ -202,14 +203,14 @@ class Maze():
             return start
 
         # contain the set of child node
-        frontier = Frontier()
-        frontier.add(start)
+        frontier = Queue()
+        frontier.put(start)
         self.explored.add(start.state)
 
         # do loops until no child node to expand
         while frontier.empty() == False:
             # take a node from set
-            tempNode = frontier.remove()
+            tempNode = frontier.get()
             # self.solution.append(tempNode.action, tempNode.state)
             # self.num_explored += 1
 
@@ -222,7 +223,7 @@ class Maze():
                     # child.updateCost()
 
                     # add child node into frontier and mark it
-                    frontier.add(child)
+                    frontier.put(child)
                     self.explored.add(child.state)
         
     def bfs_Search(self):
