@@ -1,9 +1,33 @@
 import sys
 import math
 from queue import PriorityQueue
+from queue import LifoQueue
+from queue import Queue
 import matplotlib.pyplot as plt
 import os
 
+
+
+def manhattan(Start, Goal):
+    return abs(Start[0] - Goal[0]) + abs(Start[1] - Goal[1])
+
+def euclidean(Start, Goal):
+    dx = Goal[0] - Start[0]
+    dy = Goal[1] - Start[1]
+    return math.sqrt(dx*dx + dy * dy)
+
+def diagonal(Start, Goal):
+    cost_n = 1 # cost of non-diagonal movement
+    cost_d = cost_n * math.sqrt(2) # cost of diagonal movement
+    d_max = max(abs(Goal[0] - Start[0]), abs(Goal[1] - Start[1]))
+    d_min = min(abs(Goal[0] - Start[0]), abs(Goal[1] - Start[1]))
+    return  cost_n * (d_max - d_min) + cost_d * d_min
+
+F = {
+    'manhattan': manhattan,
+    'euclidean': euclidean,
+    'diagonal': diagonal,
+}
 
 class Node():
     def __init__(self, state, parent, action):
@@ -34,17 +58,9 @@ class Node():
     def updateCost(self):
         self.cost = self.parent.cost + 1
 
-    def updateHeuristic(self, goal, type):
-        if type == "manhattan":
-            self.heuristic = abs(self.state[0] - goal[0]) + abs(self.state[1] - goal[1])
-        elif type == "euclidean":
-            self.heuristic = math.sqrt(math.power(goal[0] - self.state[0], 2) + math.power(goal[1] - self.state[1], 2))
-        elif type == "diagonal":
-            cost_n = 1 # cost of non-diagonal movement
-            cost_d = cost_n * math.sqrt(2) # cost of diagonal movement
-            d_max = max(abs(goal[0] - self.state[0]), abs(goal[1] - self.state[1]))
-            d_min = min(abs(goal[0] - self.state[0]), abs(goal[1] - self.state[1]))
-            self.heuristic = cost_n * (d_max - d_min) + cost_d * d_min
+    def updateHeuristic(self, goal, Func):
+        self.heuristic = F[Func](self.state, goal)
+        
 
 class Frontier():
     def __init__(self):
@@ -168,6 +184,121 @@ class Maze():
                     child.updateCost()
                     child.updateHeuristic(self.goal, "manhattan")
                     frontier.add(child)
+
+    def bfsMarkedNode(self):
+        """Find a solution to maze, if one exists"""
+
+        # keep track of number of states explored
+        # self.num_explored = 0
+
+        # initialize an empty explored set
+        self.explored = set()
+
+        # initialize start node
+        start = Node(self.start, parent=None, action=None)
+
+        # check if start node is the goal node
+        if start.state == self.goal:
+            return start
+
+        # contain the set of child node
+        frontier = Queue()
+        frontier.put(start)
+        self.explored.add(start.state)
+
+        # do loops until no child node to expand
+        while frontier.empty() == False:
+            # take a node from set
+            tempNode = frontier.get()
+            # self.solution.append(tempNode.action, tempNode.state)
+            # self.num_explored += 1
+
+            for action, state in self.generateSuccessors(tempNode.state):
+                if state not in self.explored:
+                    # initialzie a child node
+                    child = Node(state=state, parent=tempNode, action=action)
+                    if child.state == self.goal:
+                        return child
+                    # child.updateCost()
+
+                    # add child node into frontier and mark it
+                    frontier.put(child)
+                    self.explored.add(child.state)
+        
+    def bfs_Search(self):
+        action = []
+        cells = []
+        tempNode = self.bfsMarkedNode()
+
+        while True:
+            action.append(tempNode.action)
+            cells.append(tempNode.state)
+            tempNode = tempNode.parent
+            if tempNode.state == self.start:
+                break
+        
+        action.reverse()
+        cells.reverse()
+        
+        self.solution = (action, cells)
+
+
+    def dfsMarkedNode(self):
+        """Find a solution to maze, if one exists"""
+
+        # keep track of number of states explored
+        # self.num_explored = 0
+
+        # initialize an empty explored set
+        self.explored = set()
+
+        # initialize start node
+        start = Node(self.start, parent=None, action=None)
+
+        # check if start node is the goal node
+        if start.state == self.goal:
+            return start
+
+        # contain the set of child node
+        frontier = LifoQueue()
+        frontier.put(start)
+        self.explored.add(start.state)
+
+        # do loops until no child node to expand
+        while frontier.empty() == False:
+            # take a node from set
+            tempNode = frontier.get()
+            # self.solution.append(tempNode.action, tempNode.state)
+            # self.num_explored += 1
+
+            for action, state in self.generateSuccessors(tempNode.state):
+                if state not in self.explored:
+                    # initialzie a child node
+                    child = Node(state=state, parent=tempNode, action=action)
+                    if child.state == self.goal:
+                        return child
+                    # child.updateCost()
+
+                    # add child node into frontier and mark it
+                    frontier.put(child)
+                    self.explored.add(child.state)
+        
+    def dfs_Search(self):
+        action = []
+        cells = []
+        tempNode = self.dfsMarkedNode()
+
+        while True:
+            action.append(tempNode.action)
+            cells.append(tempNode.state)
+            tempNode = tempNode.parent
+            if tempNode.state == self.start:
+                break
+        
+        action.reverse()
+        cells.reverse()
+        
+        self.solution = (action, cells)
 
     def visualize_maze(self, save_img = False, input_dir = None):
         """
