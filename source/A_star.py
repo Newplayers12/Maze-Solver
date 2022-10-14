@@ -6,29 +6,32 @@ from queue import Queue
 import matplotlib.pyplot as plt
 import matplotlib.pylab as pylab
 import os
+from functions import *
+
+
+class Frontier():
+    def __init__(self):
+        self.frontier = PriorityQueue()
+
+    def add(self, node):
+        self.frontier.put((node.cost + node.heuristic, node.heuristic, node))
+
+    # Can be used for another algorithm but seems not useful here...
+    # def contains_state(self, state):
+        # return any(node.state == state for node in self.frontier)
+
+    def empty(self):
+        return self.frontier.qsize() == 0
+
+    def remove(self):
+        if self.empty():
+            raise Exception("empty frontier")
+        else:
+            node = self.frontier.get()
+            return node[2]
 
 
 
-def manhattan(Start, Goal):
-    return abs(Start[0] - Goal[0]) + abs(Start[1] - Goal[1])
-
-def euclidean(Start, Goal):
-    dx = Goal[0] - Start[0]
-    dy = Goal[1] - Start[1]
-    return math.sqrt(dx*dx + dy * dy)
-
-def diagonal(Start, Goal):
-    cost_n = 1 # cost of non-diagonal movement
-    cost_d = cost_n * math.sqrt(2) # cost of diagonal movement
-    d_max = max(abs(Goal[0] - Start[0]), abs(Goal[1] - Start[1]))
-    d_min = min(abs(Goal[0] - Start[0]), abs(Goal[1] - Start[1]))
-    return  cost_n * (d_max - d_min) + cost_d * d_min
-
-F = {
-    'manhattan': manhattan,
-    'euclidean': euclidean,
-    'diagonal': diagonal,
-}
 
 class Node():
     def __init__(self, state, parent, action):
@@ -63,26 +66,6 @@ class Node():
         self.heuristic = F[Func](self.state, goal)
         
 
-class Frontier():
-    def __init__(self):
-        self.frontier = PriorityQueue()
-
-    def add(self, node):
-        self.frontier.put((node.cost + node.heuristic, node.heuristic, node))
-
-    # Can be used for another algorithm but seems not useful here...
-    # def contains_state(self, state):
-        # return any(node.state == state for node in self.frontier)
-
-    def empty(self):
-        return self.frontier.qsize() == 0
-
-    def remove(self):
-        if self.empty():
-            raise Exception("empty frontier")
-        else:
-            node = self.frontier.get()
-            return node[2]
 
 
 class Maze():

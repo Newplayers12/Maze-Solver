@@ -1,10 +1,10 @@
-import sys
-import math
-from queue import PriorityQueue
-import matplotlib.pyplot as plt
-import matplotlib.pylab as pylab
-import os
+from utils import *
 
 
+def USC(start, end):
+    h = Frontier()
 
-def USC()
+    while (not h.empty()):
+        heu, du, u = h.pop()
+    
+        
