@@ -20,7 +20,7 @@ if __name__ == '__main__':
         print('Test Level 1: BFS - Search Algorithms...')
         maze = BFS_Maze(sys.argv[3])
         maze.bfs_Search()
-
+        
     elif sys.argv[2] == "ucs":
         print('Test Level 1: UCS - Search Algorithm...')
         maze = UCS_Maze(sys.argv[3])
