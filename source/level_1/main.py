@@ -1,7 +1,8 @@
 from bfs import *
 from dfs import *
 from A_star import *
-from USC import *
+from UCS import *
+from GBF import *
 import sys
 
 if __name__ == '__main__':
@@ -20,10 +21,15 @@ if __name__ == '__main__':
         maze = BFS_Maze(sys.argv[3])
         maze.bfs_Search()
 
-    elif sys.argv[2] == "usc":
+    elif sys.argv[2] == "ucs":
         print('Test Level 1: UCS - Search Algorithm...')
-        maze = USC_Maze(sys.argv[3])
-        maze.usc_Search()
+        maze = UCS_Maze(sys.argv[3])
+        maze.ucs_Search()
+
+    if sys.argv[2] == "gbf":
+        print('Test Level 1: Greedy Best First - Search Algorithms...')
+        maze = GBF_Maze(sys.argv[3])
+        maze.gbf_Search()
 
     elif sys.argv[2] == "astar":
         print('Test Level 1: A* Search Algorithms...')

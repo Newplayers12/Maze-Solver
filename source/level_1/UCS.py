@@ -2,7 +2,7 @@ from heapq import heappush, heappop
 from utils import Maze, Node
 
 
-class USC_Node(Node):
+class UCS_Node(Node):
     def __init__(self, state, parent, action):
         self.state = state
         self.parent = parent
@@ -35,7 +35,7 @@ class USC_Node(Node):
     def updateHeuristic(self, goal, Func):
         self.heuristic = F[Func](self.state, goal)
 
-class USC_Maze(Maze):
+class UCS_Maze(Maze):
     def __init__(self, file_name):
         f=open(file_name,'r')
         n_bonus_points = int(next(f)[:-1])
@@ -67,7 +67,7 @@ class USC_Maze(Maze):
                         
                 else:
                     pass
-    def uscMarkedNode(self):
+    def ucsMarkedNode(self):
         
 
         # keep track of number of states explored
@@ -77,7 +77,7 @@ class USC_Maze(Maze):
         self.explored = set()
 
         # initialize start node
-        start = USC_Node(self.start, parent=None, action=None)
+        start = UCS_Node(self.start, parent=None, action=None)
 
         # check if start node is the goal node
         if start.state == self.goal:
@@ -100,7 +100,7 @@ class USC_Maze(Maze):
             for action, state in self.generateSuccessors(tempNode.state):
                 if state not in self.explored:
                     # initialzie a child node
-                    child = USC_Node(state=state, parent=tempNode, action=action)
+                    child = UCS_Node(state=state, parent=tempNode, action=action)
                     if child.state == self.goal:
                         return child
                     child.updateCost(1)
@@ -110,10 +110,10 @@ class USC_Maze(Maze):
                     self.explored.add(child.state)
         
         
-    def usc_Search(self):
+    def ucs_Search(self):
         action = []
         cells = []
-        tempNode = self.uscMarkedNode()
+        tempNode = self.ucsMarkedNode()
 
         while True:
             action.append(tempNode.action)
