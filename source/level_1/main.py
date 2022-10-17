@@ -13,10 +13,17 @@ if __name__ == '__main__':
         print('Test Level 1: DFS - Search Algorithms...')
         maze = DFS_Maze(sys.argv[3])
         maze.dfs_Search()
+        
     elif sys.argv[2] == "bfs":
         print('Test Level 1: BFS - Search Algorithms...')
         maze = BFS_Maze(sys.argv[3])
         maze.bfs_Search()
+
+    elif sys.argv[2] == "ucs":
+        print('Test Level 1: UCS - Search Algorithm...')
+        maze = USC_Maze(sys.argv[3])
+        maze.usc_Search()
+
     elif sys.argv[2] == "astar":
         print('Test Level 1: A* Search Algorithms...')
         maze = A_star_Maze(sys.argv[3])
