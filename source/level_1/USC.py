@@ -8,6 +8,7 @@ class USC_Node(Node):
         self.parent = parent
         self.action = action
         self.cost = 0
+        # Heuristic coi như luôn là 0 vì không có ảnh hưởng 
         self.heuristic = 0
         
     def __eq__(self, other):
