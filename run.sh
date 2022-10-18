@@ -13,12 +13,16 @@ python main.py level_1 astar ../../input/level_1/map5.txt
 # python main.py level_1 dfs ../../input/level_1/map1.txt
 # python main.py level_1 dfs ../../input/level_1/map2.txt
 # python main.py level_1 dfs ../../input/level_1/map3.txt
+# python main.py level_1 dfs ../../input/level_1/map4.txt
+# python main.py level_1 dfs ../../input/level_1/map5.txt
 
 # echo Doing the BFS algorithm
 
 # python main.py level_1 bfs ../../input/level_1/map1.txt
 # python main.py level_1 bfs ../../input/level_1/map2.txt
 # python main.py level_1 bfs ../../input/level_1/map3.txt
+# python main.py level_1 bfs ../../input/level_1/map4.txt
+# python main.py level_1 bfs ../../input/level_1/map5.txt
 
 # echo Doing the UCS algorithm
 

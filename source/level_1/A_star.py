@@ -112,7 +112,7 @@ class A_star_Maze(Maze):
 
             # If nothing left in frontier, then no path
             if frontier.empty():
-                raise Exception("no solution")
+                raise NameError("no solution")
 
             # Choose a node from the frontier
             node = frontier.remove()
