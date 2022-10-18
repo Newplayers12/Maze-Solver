@@ -59,40 +59,6 @@ class Frontier():
 
 
 class A_star_Maze(Maze):
-    def __init__(self, file_name):
-        f=open(file_name,'r')
-        n_bonus_points = int(next(f)[:-1])
-        self.bonus_points = []
-        for i in range(n_bonus_points):
-            x, y, reward = map(int, next(f)[:-1].split(' '))
-            self.bonus_points.append((x, y, reward))
-
-        text=f.read()
-        self.matrix=[list(i) for i in text.splitlines()]
-        f.close()
-        self.shape = [len(self.matrix), len(self.matrix[0])]
-
-        self.start = None
-        self.goal = None
-        self.walls = []
-
-        for i in range(len(self.matrix)):
-            for j in range(len(self.matrix[0])):
-                if self.matrix[i][j]=='S':
-                    self.start=(i,j)
-
-                elif self.matrix[i][j]==' ':
-                    if (i==0) or (i==len(self.matrix)-1) or (j==0) or (j==len(self.matrix[0])-1):
-                        self.goal=(i,j)
-                
-                elif self.matrix[i][j] == 'X':
-                    self.walls.append((i, j))
-                        
-                else:
-                    pass
-
-
-
     def A_star(self):
         """Finds a solution to maze, if one exists."""
 
