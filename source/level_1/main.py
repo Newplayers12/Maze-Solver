@@ -6,6 +6,8 @@ from UCS import *
 from GBF import *
 import sys
 
+from utilshelper import illustration_video
+
 if __name__ == '__main__':
     
     if len(sys.argv) != 4:
@@ -38,6 +40,7 @@ if __name__ == '__main__':
             maze = A_star_Maze(sys.argv[3])
             maze.A_star()
     
-        maze.visualize_maze(True, sys.argv[3])
+        illustration_video(maze, True, sys.argv[3])
+        maze.visualize_maze(False, sys.argv[3])
     except NameError as message:
         print("detect a fault: ", message)
