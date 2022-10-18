@@ -9,6 +9,7 @@ import os
 
 #TO DO: Implement the heuristic functions for level 2
 def Heuristic_level_2(Start, Goal, bonus_points):
+    ## Making the
     pass
     
 
