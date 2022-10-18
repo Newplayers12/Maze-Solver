@@ -5,6 +5,8 @@ from queue import LifoQueue
 from queue import Queue
 import matplotlib.pyplot as plt
 import os
+import pygame
+# from utilshelper import *
 
 
 #TO DO: Implement the heuristic functions for level 2
@@ -164,3 +166,12 @@ class Maze():
         
         for _, point in enumerate(self.bonus_points):
             print(f'Bonus point at position (x, y) = {point[0], point[1]} with point {point[2]}')
+
+    # def illustration_video(self, display = False):
+    #     WIDTH = len(self.matrix)
+    #     HEIGHT = len(self.matrix[0])
+        
+    #     WIN = pygame.display.set_mode((WIDTH, WIDTH))
+    #     pygame.display.set_caption("A* Path Finding Algorithm")
+
+    #     pass

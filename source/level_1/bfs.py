@@ -26,7 +26,10 @@ class BFS_Maze(Maze):
         self.explored.add(start.state)
 
         # do loops until no child node to expand
-        while frontier.empty() == False:
+        while True:
+            if frontier.empty():
+                raise NameError("no solution")
+                
             # take a node from set
             tempNode = frontier.get()
             # self.solution.append(tempNode.action, tempNode.state)
