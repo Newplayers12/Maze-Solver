@@ -29,3 +29,8 @@ echo Doing the GBF Algorithm
 python main.py level_1 gbf ../../input/level_1/map1.txt
 python main.py level_1 gbf ../../input/level_1/map2.txt
 python main.py level_1 gbf ../../input/level_1/map3.txt
+
+echo Doing Level 2 maps
+
+cd ../level_2/
+

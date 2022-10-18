@@ -7,6 +7,11 @@ import matplotlib.pyplot as plt
 import os
 
 
+#TO DO: Implement the heuristic functions for level 2
+def Heuristic_level_2(Start, Goal, bonus_points):
+    pass
+    
+
 
 def manhattan(Start, Goal):
     return abs(Start[0] - Goal[0]) + abs(Start[1] - Goal[1])
@@ -119,7 +124,7 @@ class Maze():
             ax.spines[i].set_visible(False)
 
         plt.scatter([i[1] for i in walls],[-i[0] for i in walls],
-                    marker='X',s=100,color='black')
+                    marker='s',s=100,color='black')
         
         plt.scatter([i[1] for i in self.bonus_points],[-i[0] for i in self.bonus_points],
                     marker='P',s=100,color='green')
