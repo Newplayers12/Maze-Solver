@@ -69,10 +69,10 @@ class A_star_Maze(Maze):
         start = A_star_Node(state=self.start, parent=None, action=None)
         frontier = Frontier()
         frontier.add(start)
-
+        self.draw_explored.append((start.state, 0))
         # Initialize an empty explored set
         self.explored = set()
-
+        
         # Keep looping until solution found
         while True:
 
@@ -99,8 +99,9 @@ class A_star_Maze(Maze):
                 return
 
             # Mark node as explored
+            
             self.explored.add(node.state)
-
+            self.draw_explored.append((node.state, 1))
             # Add neighbors to frontier
             for action, state in self.generateSuccessors(node.state):
                 # if not frontier.contains_state(state) and state not in self.explored:
@@ -109,3 +110,4 @@ class A_star_Maze(Maze):
                     child.updateCost()
                     child.updateHeuristic(self.goal, "manhattan")
                     frontier.add(child)
+                    self.draw_explored.append((child.state, 0))

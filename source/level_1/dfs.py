@@ -23,6 +23,7 @@ class DFS_Maze(Maze):
         frontier = LifoQueue()
         frontier.put(start)
         self.explored.add(start.state)
+        
 
         # do loops until no child node to expand
         while True:
@@ -33,6 +34,8 @@ class DFS_Maze(Maze):
             tempNode = frontier.get()
             # self.solution.append(tempNode.action, tempNode.state)
             # self.num_explored += 1
+            self.explored.add(tempNode.state)
+            self.draw_explored.append((tempNode.state, 1))
 
             for action, state in self.generateSuccessors(tempNode.state):
                 if state not in self.explored:
@@ -44,7 +47,9 @@ class DFS_Maze(Maze):
 
                     # add child node into frontier and mark it
                     frontier.put(child)
-                    self.explored.add(child.state)
+                    # self.explored.add(child.state)
+                    self.draw_explored.append((child.state, 0))
+
         
     def dfs_Search(self):
         action = []

@@ -1,15 +1,15 @@
 from heapq import heappush, heappop
 from utils import Maze, Node, F
 
-HeuristicFunction = 'diagonal'
+HeuristicFunction = 'manhattan'
 
 class GBF_Node(Node):
     def __init__(self, state, parent, action):
         self.state = state
         self.parent = parent
         self.action = action
+        # Cost coi như luôn là 0 vì không có ảnh hưởng 
         self.cost = 0
-        # Heuristic coi như luôn là 0 vì không có ảnh hưởng 
         self.heuristic = 0
         
     def __eq__(self, other):
@@ -48,7 +48,7 @@ class GBF_Maze(Maze):
 
         # initialize start node
         start = GBF_Node(self.start, parent=None, action=None)
-
+        # start.updateHeuristic(self.goal, HeuristicFunction)
         # check if start node is the goal node
         if start.state == self.goal:
             return start
@@ -57,13 +57,16 @@ class GBF_Maze(Maze):
         frontier = []
         ## using the Heap to contains the nodes, pushing the one with lowest cost upfront
         heappush(frontier, start)
+        self.draw_explored.append((start.state, 0))
         
         self.explored.add(start.state)
 
         # Loop untils the Heap is empty
-        while frontier:
+        while len(frontier):
             # take a node from set
             tempNode = heappop(frontier)
+            self.explored.add(tempNode.state)
+            self.draw_explored.append((tempNode.state, 1))
             # self.solution.append(tempNode.action, tempNode.state)
             # self.num_explored += 1
 
@@ -78,7 +81,9 @@ class GBF_Maze(Maze):
                     child.updateHeuristic(self.goal, HeuristicFunction)
                     # add child node into frontier and mark it
                     heappush(frontier, child)
-                    self.explored.add(child.state)
+                    
+                    self.draw_explored.append((child.state, 0))
+
         
         
     def gbf_Search(self):

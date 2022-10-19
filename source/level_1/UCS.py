@@ -56,6 +56,7 @@ class UCS_Maze(Maze):
         frontier = []
         ## using the Heap to contains the nodes, pushing the one with lowest cost upfront
         heappush(frontier, start)
+        self.draw_explored.append((start.state, 0))
         
         self.explored.add(start.state)
 
@@ -63,6 +64,8 @@ class UCS_Maze(Maze):
         while frontier:
             # take a node from set
             tempNode = heappop(frontier)
+            self.explored.add(tempNode.state)
+            self.draw_explored.append((tempNode.state, 1))
             # self.solution.append(tempNode.action, tempNode.state)
             # self.num_explored += 1
 
@@ -76,7 +79,8 @@ class UCS_Maze(Maze):
 
                     # add child node into frontier and mark it
                     heappush(frontier, child)
-                    self.explored.add(child.state)
+                    self.draw_explored.append((child.state, 0))
+
         
         
     def ucs_Search(self):

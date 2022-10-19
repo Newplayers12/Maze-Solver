@@ -4,12 +4,13 @@ from tkinter import Widget
 import pygame
 import math
 from queue import PriorityQueue
+import os
 
 pygame.display.set_caption("A* Path Finding Algorithm")
 
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
-BLUE = (0, 255, 0)
+BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -102,13 +103,13 @@ def make_grid(rows, width, height, maze):
 		grid.append([])
 		for j in range(int( width/ gap2)):
 			if maze.start==(i,j):
-				point = Point(i, j, gap1, gap2, rows, GREEN)
+				point = Point(i, j, gap1, gap2, rows, ORANGE)
 			elif maze.goal==(i,j):
 				point = Point(i, j, gap1, gap2, rows, RED)
 			elif maze.matrix[i][j]=='X':
 				point = Point(i, j, gap1, gap2, rows, BLACK)
-			elif (i, j) in maze.solution[1]:
-				point = Point(i, j, gap1, gap2, rows, YELLOW)
+			# elif (i, j) in maze.solution[1]:
+			# 	point = Point(i, j, gap1, gap2, rows, YELLOW)
 			elif (i, j) in maze.bonus_points:
 				point = Point(i, j, gap1, gap2, rows, PURPLE)
 			elif maze.matrix[i][j]==' ':
@@ -182,6 +183,7 @@ def illustration_video(maze, save_img = False, input_dir = None):
 		pygame.image.save(WIN, os.path.join(output_dir, dir_info[-1].split('.')[-2] + '.png'))
 	# quit the windown
 	pygame.quit()
+	return WIN
 
 
 # function to draw illustration video

@@ -6,8 +6,11 @@ from queue import Queue
 import matplotlib.pyplot as plt
 import os
 import pygame
-# from utilshelper import *
+import vidmaker
+from utilshelper import *
+import time
 
+VIDEO_INDEX = 0
 
 #TO DO: Implement the heuristic functions for level 2
 def Heuristic_level_2(Start, Goal, bonus_points):
@@ -59,7 +62,8 @@ class Maze():
         self.matrix=[list(i) for i in text.splitlines()]
         f.close()
         self.shape = [len(self.matrix), len(self.matrix[0])]
-
+        self.draw_explored = []
+        self.draw_frontier = []
         self.start = None
         self.goal = None
         self.walls = []
@@ -167,11 +171,69 @@ class Maze():
         for _, point in enumerate(self.bonus_points):
             print(f'Bonus point at position (x, y) = {point[0], point[1]} with point {point[2]}')
 
-    # def illustration_video(self, display = False):
-    #     WIDTH = len(self.matrix)
-    #     HEIGHT = len(self.matrix[0])
-        
-    #     WIN = pygame.display.set_mode((WIDTH, WIDTH))
-    #     pygame.display.set_caption("A* Path Finding Algorithm")
+    def save_video(self, input_dir, algorithm):
+        dir_info = input_dir.split('/')       
+        output_dir = os.path.join(os.path.pardir, os.path.pardir, 'output')
 
-    #     pass
+        if not os.path.exists(output_dir):
+            os.mkdir(output_dir)
+        
+        output_dir = os.path.join(output_dir, dir_info[-2])
+        if not os.path.exists(output_dir):
+            os.mkdir(output_dir)
+        # plt.savefig(os.path.join(output_dir, dir_info[-1].split('.')[-2] + '.png'))
+
+        video = vidmaker.Video(os.path.join(output_dir, dir_info[-1].split('.')[-2] + '_' + algorithm + '.mp4'), late_export=True)
+        
+        clock = pygame.time.Clock()
+        FPS = 60
+
+        HEIGHT = self.shape[0] * 15
+        WIDTH = self.shape[1] * 15
+        ROWS = 15
+        WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption("Path Finding Algorithm")
+        clock.tick(FPS)
+        grid = make_grid(ROWS, WIDTH, HEIGHT, self)
+        video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
+        # for i in range(len(self.solution[1])):
+        #     point = Point(self.solution[1][i][0], self.solution[1][i][1], 15, 15, ROWS, YELLOW)
+        #     point.draw(WIN)
+        #     video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
+
+        run = True
+        while run:           
+            draw(WIN, grid, ROWS, WIDTH, HEIGHT)
+            
+            
+            for node, cnt in self.draw_explored[2:]:
+                # delta = len(self.draw_frontier) - len(self.draw_explored)
+                # if i > delta:
+                #     point = Point(self.draw_explored[i - delta][0], self.draw_explored[i - delta][1], 15, 15, ROWS, GREY)
+                #     point.draw(WIN)
+                point = Point(node[0], node[1], 15, 15, ROWS, PURPLE if cnt == 1 else TURQUOISE)
+                point.draw(WIN)
+                # time.sleep(1e-4)
+                video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
+
+            for i in range(len(self.solution[1])):
+                point = Point(self.solution[1][i][0], self.solution[1][i][1], 15, 15, ROWS, YELLOW)
+                point.draw(WIN)
+                time.sleep(1e-2)
+                video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
+            
+
+            run = False
+            # for event in pygame.event.get():
+            #     if event.type == pygame.QUIT:
+            #         run = False
+            #     else:
+            #         pass
+
+
+
+        video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
+        
+        video.export(True)
+        pygame.quit()
+    

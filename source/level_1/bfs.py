@@ -23,6 +23,8 @@ class BFS_Maze(Maze):
         # contain the set of child node
         frontier = Queue()
         frontier.put(start)
+        self.draw_explored.append((start.state, 0))
+
         self.explored.add(start.state)
 
         # do loops until no child node to expand
@@ -32,6 +34,8 @@ class BFS_Maze(Maze):
                 
             # take a node from set
             tempNode = frontier.get()
+            self.explored.add(tempNode.state)
+            self.draw_explored.append((tempNode.state, 1))
             # self.solution.append(tempNode.action, tempNode.state)
             # self.num_explored += 1
 
@@ -45,7 +49,8 @@ class BFS_Maze(Maze):
 
                     # add child node into frontier and mark it
                     frontier.put(child)
-                    self.explored.add(child.state)
+                    self.draw_explored.append((child.state, 0))
+
         
     def bfs_Search(self):
         action = []

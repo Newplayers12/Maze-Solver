@@ -40,7 +40,9 @@ if __name__ == '__main__':
             maze = A_star_Maze(sys.argv[3])
             maze.A_star()
     
-        illustration_video(maze, True, sys.argv[3])
-        maze.visualize_maze(False, sys.argv[3])
+        # win = illustration_video(maze, True, sys.argv[3])
+
+        maze.save_video(sys.argv[3], sys.argv[2])
+        # maze.visualize_maze(False, sys.argv[3])
     except NameError as message:
         print("detect a fault: ", message)
