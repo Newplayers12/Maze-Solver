@@ -1,0 +1,50 @@
+10
+1 2 0
+1 14 0
+1 28 0
+7 31 0
+30 15 0
+33 11 0
+33 27 0
+35 17 0
+35 27 0
+37 5 0
+XXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXX
+X +X     X   X+    X        +X    X
+X X XXXXX X X XXX X XXXXX XXX X X X
+X         X     X   X       X X X X
+X XXXXX XXXXX XXXXXXX XXXXXXXXX X X
+X   X     X   X X   X     X X   X X
+XXXXX XXXXXXXXX X XXXXX X XXXXXXX X
+X X X X       X         X     X+X X
+X X X XXX XXX X XXX XXXXXXXXXXX X X
+X   X X     X X X X X   X X     X X
+X XXX XXX XXXXXXX X X X X XXX XXX X
+X X X X     X X   X X X X     X   X
+X X X XXX X X X X X XXX X XXXXXXX X
+X   X X X X     X   X X     X     X
+X XXXXX XXX XXXXXXXXX X XXX X XXX X
+X     X X X X   X       X   X   X X
+X X X X X X X XXX XXXXXXXXX X X XXX
+X X X         X       X   X   X   X
+X X XXX XXXXX X XXX XXXXX XXXXXXXXX
+X X   X     X   X   X X     X X   X
+XXXXXXX XXXXX X XXX X X X XXX XXX X
+X     X   X X X X   X X X   X     X
+X XXXXX XXX X XXX X X XXXXX XXX X X
+X     X X X   X X X     X       X X
+XXX X X X X X X XXX XXX XXXXXXX X X
+X   X X X   X   X     X     X   X X
+X X XXX XXX XXX X X XXX XXX XXX X X
+X X     X X X X X X   X X X   X X X
+XXX XXXXX X X XXX X X X X XXXXXXX X
+X       X       X X X X   X X     X
+XXXXXXXXX XXXXX+X XXX XXXXX XXX X X
+X X XX     X   X X X X X        XXX
+X X X XXX XXXXXXX X X XXXXXXX X X X
+X   X      +X     X     X  +X X X X
+X XXX X XXXXX XXXXXXX XXX XXX XXX X
+X X   X X X     X+  X      +X XS  X
+X X X X X XXX XXXXX XXX XXXXXXXXX X
+X   X+X   X     X                 X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 
