@@ -2,7 +2,7 @@ from tokenize import Name
 from bfs import *
 from dfs import *
 from A_star import *
-from UCS import *
+from ucs import *
 from gbfs import *
 import sys
 import os
@@ -55,7 +55,7 @@ if __name__ == '__main__':
             print('Test Level 1: Greedy Best First - Search Algorithms...')
             maze = GBF_Maze(sys.argv[3])
             path_cost = maze.gbf_Search(sys.argv[4])
-            
+
         elif sys.argv[2] == "astar":
             print('Test Level 1: A* Search Algorithms...')
             maze = A_star_Maze(sys.argv[3])
