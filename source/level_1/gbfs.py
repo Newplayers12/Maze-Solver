@@ -1,8 +1,6 @@
 from heapq import heappush, heappop
 from utils import Maze, Node, F
 
-### The GBF Heuristic functions
-HeuristicFunction = 'euclidean'
 
 class GBF_Node(Node):
     def __init__(self, state, parent, action):
@@ -38,7 +36,7 @@ class GBF_Node(Node):
         self.heuristic = F[Func](self.state, goal)
 
 class GBF_Maze(Maze):
-    def gbfMarkedNode(self):
+    def gbfMarkedNode(self, heuristic):
         
 
         # keep track of number of states explored
@@ -82,7 +80,7 @@ class GBF_Maze(Maze):
                         return child
                     # we don't use cost to measure for the Greedy Best First Search
                     child.updateCost(1)
-                    child.updateHeuristic(self.goal, HeuristicFunction)
+                    child.updateHeuristic(self.goal, heuristic)
                     # add child node into frontier and mark it
                     heappush(frontier, child)
                     
@@ -92,11 +90,11 @@ class GBF_Maze(Maze):
 
         
         
-    def gbf_Search(self):
+    def gbf_Search(self, heuristic):
         action = []
         cells = []
     
-        tempNode = self.gbfMarkedNode()
+        tempNode = self.gbfMarkedNode(heuristic)
         path_cost = tempNode.cost
         while True:
             action.append(tempNode.action)
