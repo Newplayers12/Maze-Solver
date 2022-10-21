@@ -28,13 +28,13 @@ def diagonal(Start, Goal):
     d_min = min(abs(Goal[0] - Start[0]), abs(Goal[1] - Start[1]))
     return  cost_n * (d_max - d_min) + cost_d * d_min
 
-def Heuristic_level_2(Start, Goal, bonus_points):
+def Heuristic_level_2(Start, Goal, Bonus_point):
     res = (0, 0, 0)
-    for x, y, point in bonus_points:
-        first = point / (max(1, manhattan(Start, (x, y))))
-        second = point / (max(1, manhattan(Goal, (x, y))))
-        third = point / (max(1, manhattan(Start, (x, y)) + manhattan(Goal, (x, y))))
-        res = min(res, (first, second, third))
+    x, y = Bonus_point
+    first = point / (max(1, manhattan(Start, (x, y))))
+    second = point / (max(1, manhattan(Goal, (x, y))))
+    third = point / (max(1, manhattan(Start, (x, y)) + manhattan(Goal, (x, y))))
+        
     # the tuple is holding the minimum value from all bonus points
     # return a tuple of 3 values, (points / (dist from state to bonus_points), points/(dist from bonus_point to Goal), points / (Sum of those two distances))
     return res

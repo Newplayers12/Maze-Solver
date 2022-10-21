@@ -1,4 +1,3 @@
-
 read -p "Press enter to start level 1"
 
 cd source/level_1/

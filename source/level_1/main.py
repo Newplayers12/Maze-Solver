@@ -23,6 +23,7 @@ def write_output_file_txt(input_dir, algorithm, info):
     output_dir = os.path.join(output_dir, dir_info[-2])
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
+
     file_output = open(os.path.join(output_dir, dir_info[-1].split('.')[-2] + '_' + algorithm + '.txt'), "w")
     file_output.write(info)
     file_output.close()
@@ -51,7 +52,7 @@ if __name__ == '__main__':
             maze = UCS_Maze(sys.argv[3])
             path_cost = maze.ucs_Search()
 
-        if sys.argv[2] == "gbfs":
+        elif sys.argv[2] == "gbfs":
             print('Test Level 1: Greedy Best First - Search Algorithms...')
             maze = GBF_Maze(sys.argv[3])
             path_cost = maze.gbf_Search(sys.argv[4])
