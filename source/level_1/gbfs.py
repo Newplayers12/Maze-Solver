@@ -1,7 +1,8 @@
 from heapq import heappush, heappop
 from utils import Maze, Node, F
 
-HeuristicFunction = 'manhattan'
+### The GBF Heuristic functions
+HeuristicFunction = 'euclidean'
 
 class GBF_Node(Node):
     def __init__(self, state, parent, action):
@@ -19,10 +20,10 @@ class GBF_Node(Node):
         return not (self == other)
 
     def __lt__(self, other):
-        return (self.heuristic + self.cost < other.heuristic + other.cost) and (self.heuristic < other.heuristic)
+        return  (self.heuristic < other.heuristic)
 
     def __gt__(self, other):
-        return (self.heuristic + self.cost > other.heuristic + other.cost) and (self.heuristic > other.heuristic)
+        return (self.heuristic > other.heuristic)
 
     def __le__(self, other):
         return (self < other) or (self == other)
@@ -62,7 +63,8 @@ class GBF_Maze(Maze):
         self.explored.add(start.state)
 
         # Loop untils the Heap is empty
-        while len(frontier):
+        while len(frontier) > 0:
+            
             # take a node from set
             tempNode = heappop(frontier)
             self.explored.add(tempNode.state)
@@ -75,22 +77,27 @@ class GBF_Maze(Maze):
                     # initialzie a child node
                     child = GBF_Node(state=state, parent=tempNode, action=action)
                     if child.state == self.goal:
+                        child.updateCost(1)
+
                         return child
                     # we don't use cost to measure for the Greedy Best First Search
-                    # child.updateCost(0)
+                    child.updateCost(1)
                     child.updateHeuristic(self.goal, HeuristicFunction)
                     # add child node into frontier and mark it
                     heappush(frontier, child)
                     
                     self.draw_explored.append((child.state, 0))
+        
+        raise NameError("no solution")
 
         
         
     def gbf_Search(self):
         action = []
         cells = []
+    
         tempNode = self.gbfMarkedNode()
-
+        path_cost = tempNode.cost
         while True:
             action.append(tempNode.action)
             cells.append(tempNode.state)
@@ -103,3 +110,4 @@ class GBF_Maze(Maze):
         cells.reverse()
         
         self.solution = (action, cells)
+        return path_cost

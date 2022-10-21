@@ -8,20 +8,19 @@ class UCS_Node(Node):
         self.parent = parent
         self.action = action
         self.cost = 0
-        # Heuristic coi như luôn là 0 vì không có ảnh hưởng 
         self.heuristic = 0
         
     def __eq__(self, other):
-        return (self.cost == other.cost) and (self.heuristic == other.heuristic)
+        return (self.cost == other.cost)
 
     def __ne__(self, other):
         return not (self == other)
 
     def __lt__(self, other):
-        return (self.heuristic + self.cost < other.heuristic + other.cost) and (self.heuristic < other.heuristic)
+        return (self.cost < other.cost) 
 
     def __gt__(self, other):
-        return (self.heuristic + self.cost > other.heuristic + other.cost) and (self.heuristic > other.heuristic)
+        return (self.cost > other.cost) 
 
     def __le__(self, other):
         return (self < other) or (self == other)
@@ -37,11 +36,7 @@ class UCS_Node(Node):
 
 class UCS_Maze(Maze):
     def ucsMarkedNode(self):
-        
-
-        # keep track of number of states explored
-        # self.num_explored = 0
-
+    
         # initialize an empty explored set
         self.explored = set()
 
@@ -66,28 +61,29 @@ class UCS_Maze(Maze):
             tempNode = heappop(frontier)
             self.explored.add(tempNode.state)
             self.draw_explored.append((tempNode.state, 1))
-            # self.solution.append(tempNode.action, tempNode.state)
-            # self.num_explored += 1
 
             for action, state in self.generateSuccessors(tempNode.state):
                 if state not in self.explored:
                     # initialzie a child node
                     child = UCS_Node(state=state, parent=tempNode, action=action)
                     if child.state == self.goal:
+                        child.updateCost(1)
                         return child
                     child.updateCost(1)
 
                     # add child node into frontier and mark it
                     heappush(frontier, child)
-                    self.draw_explored.append((child.state, 0))
+                    self.explored.add(child.state)
 
+                    self.draw_explored.append((child.state, 0))
+        raise NameError("no solution")
         
         
     def ucs_Search(self):
         action = []
         cells = []
         tempNode = self.ucsMarkedNode()
-
+        path_cost = tempNode.cost
         while True:
             action.append(tempNode.action)
             cells.append(tempNode.state)
@@ -100,3 +96,4 @@ class UCS_Maze(Maze):
         cells.reverse()
         
         self.solution = (action, cells)
+        return path_cost

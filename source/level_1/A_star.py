@@ -88,6 +88,7 @@ class A_star_Maze(Maze):
             if node.state == self.goal:
                 actions = []
                 cells = []
+                path_cost = node.cost
                 while node.parent is not None:
                     actions.append(node.action)
                     cells.append(node.state)
@@ -96,7 +97,7 @@ class A_star_Maze(Maze):
                 actions.reverse()
                 cells.reverse()
                 self.solution = (actions, cells)
-                return
+                return path_cost
 
             # Mark node as explored
             

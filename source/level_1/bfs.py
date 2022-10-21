@@ -22,7 +22,7 @@ class BFS_Maze(Maze):
 
         # contain the set of child node
         frontier = Queue()
-        frontier.put(start)
+        frontier.put((start, 0))
         self.draw_explored.append((start.state, 0))
 
         self.explored.add(start.state)
@@ -33,7 +33,7 @@ class BFS_Maze(Maze):
                 raise NameError("no solution")
                 
             # take a node from set
-            tempNode = frontier.get()
+            tempNode, cur_cost = frontier.get()
             self.explored.add(tempNode.state)
             self.draw_explored.append((tempNode.state, 1))
             # self.solution.append(tempNode.action, tempNode.state)
@@ -44,19 +44,24 @@ class BFS_Maze(Maze):
                     # initialzie a child node
                     child = Node(state=state, parent=tempNode, action=action)
                     if child.state == self.goal:
-                        return child
+                        
+                        return child, cur_cost + 1
+                        
                     # child.updateCost()
 
                     # add child node into frontier and mark it
-                    frontier.put(child)
+                    frontier.put((child, cur_cost + 1))
+                    self.explored.add(child.state)
+
                     self.draw_explored.append((child.state, 0))
 
         
     def bfs_Search(self):
         action = []
         cells = []
-        tempNode = self.bfsMarkedNode()
-
+        
+        tempNode, path_cost = self.bfsMarkedNode()
+        
         while True:
             action.append(tempNode.action)
             cells.append(tempNode.state)
@@ -69,3 +74,5 @@ class BFS_Maze(Maze):
         cells.reverse()
         
         self.solution = (action, cells)
+        return path_cost
+        

@@ -5,7 +5,6 @@ from queue import LifoQueue
 from queue import Queue
 import matplotlib.pyplot as plt
 import os
-os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
 import vidmaker
 from utilshelper import *
@@ -14,6 +13,7 @@ import time
 VIDEO_INDEX = 0
 
 
+    
 
 
 def manhattan(Start, Goal):
@@ -30,6 +30,18 @@ def diagonal(Start, Goal):
     d_max = max(abs(Goal[0] - Start[0]), abs(Goal[1] - Start[1]))
     d_min = min(abs(Goal[0] - Start[0]), abs(Goal[1] - Start[1]))
     return  cost_n * (d_max - d_min) + cost_d * d_min
+
+#TO DO: Implement the heuristic functions for level 2
+def Heuristic_level_2(Start, Goal, bonus_points):
+    res = (0, 0, 0)
+    for x, y, point in bonus_points:
+        first = point / (max(1, manhattan(Start, (x, y))))
+        second = point / (max(1, manhattan(Goal, (x, y))))
+        third = point / (max(1, manhattan(Start, (x, y)) + manhattan(Goal, (x, y))))
+        res = min(res, (first, second, third))
+    # the tuple is holding the minimum value from all bonus points
+    # return a tuple of 3 values, (points / (dist from state to bonus_points), points/(dist from bonus_point to Goal), points / (Sum of those two distances))
+    return res
 
 F = {
     'manhattan': manhattan,
@@ -52,8 +64,9 @@ class Maze():
         n_bonus_points = int(next(f)[:-1])
         self.bonus_points = []
         for i in range(n_bonus_points):
-            x, y, reward = map(int, next(f)[:-1].split(' '))
+            x, y, reward = map(int, next(f).split())
             self.bonus_points.append((x, y, reward))
+        # input("Done")
 
         text=f.read()
         self.matrix=[list(i) for i in text.splitlines()]
@@ -77,6 +90,8 @@ class Maze():
                 elif self.matrix[i][j] == 'X':
                     self.walls.append((i, j))
                         
+                elif self.matrix[i][j] == '+':
+                    pass
                 else:
                     pass
         f.close()
@@ -203,13 +218,17 @@ class Maze():
         while run:           
             draw(WIN, grid, ROWS, WIDTH, HEIGHT)
             
-            
-            for node, cnt in self.draw_explored[2:]:
+            ## (a, b, c) * (cnt_points_through) // len(bonus_points)
+
+            for x, y, cost in self.bonus_points:
+                Point(x, y, 15, 15, ROWS, LIGHT_PINK).draw(WIN)
+
+            for node, cnt, sd in self.draw_explored[2:]:
                 # delta = len(self.draw_frontier) - len(self.draw_explored)
                 # if i > delta:
                 #     point = Point(self.draw_explored[i - delta][0], self.draw_explored[i - delta][1], 15, 15, ROWS, GREY)
                 #     point.draw(WIN)
-                point = Point(node[0], node[1], 15, 15, ROWS, PURPLE if cnt == 1 else TURQUOISE)
+                point = Point(node[0], node[1], 15, 15, ROWS, ([x*(sd) //(len(self.bonus_points) + 1) for x in PURPLE]) if cnt == 1 else TURQUOISE)
                 point.draw(WIN)
                 # time.sleep(1e-4)
                 video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
