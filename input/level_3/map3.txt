@@ -39,7 +39,7 @@ X X       X X+        X  +X+X  +X
 X XXX XXXXX XXXXXXXXX X+XXX X XXX
 X X+      X   X         X X   X 
 X XXXXXXX X XXX X XXXXX X X XXX X
-X X            +X X     X   X X X
+X X            +X X         X X X
 X X X XXXXX XXXXXXXXXXX X XXX X X
 X   X X+          X+   X X   X+ X
 XXX X XXXXXXX XXX XXX X+X XXXXX X
@@ -57,5 +57,5 @@ X       X X X X         X     X+X
 X XXXXXXX X XXXXXXXXX XXX+XXX X X
 X X X   X X       X         X X X
 X X XXX X X X XXX X XXXXXXX X X X
-X   X       X X        +X   X   X
+X   X       X X        +X       X
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
