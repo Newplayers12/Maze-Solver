@@ -18,10 +18,10 @@ class A_star_Node(Node):
         return not (self == other)
 
     def __lt__(self, other):
-        return (self.heuristic + self.cost < other.heuristic + other.cost) and (self.heuristic < other.heuristic)
+        return (self.heuristic + self.cost < other.heuristic + other.cost)
 
     def __gt__(self, other):
-        return (self.heuristic + self.cost > other.heuristic + other.cost) and (self.heuristic > other.heuristic)
+        return (self.heuristic + self.cost > other.heuristic + other.cost)
 
     def __le__(self, other):
         return (self < other) or (self == other)
@@ -59,7 +59,7 @@ class Frontier():
 
 
 class A_star_Maze(Maze):
-    def A_star(self):
+    def A_star(self, heuristic):
         """Finds a solution to maze, if one exists."""
 
         # Keep track of number of states explored
@@ -100,7 +100,6 @@ class A_star_Maze(Maze):
                 return path_cost
 
             # Mark node as explored
-            
             self.explored.add(node.state)
             self.draw_explored.append((node.state, 1))
             # Add neighbors to frontier
@@ -109,6 +108,7 @@ class A_star_Maze(Maze):
                 if state not in self.explored:
                     child = A_star_Node(state=state, parent=node, action=action)
                     child.updateCost()
-                    child.updateHeuristic(self.goal, "manhattan")
+                    child.updateHeuristic(self.goal, heuristic)
+                    self.explored.add(child.state)
                     frontier.add(child)
                     self.draw_explored.append((child.state, 0))

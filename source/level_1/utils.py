@@ -32,9 +32,8 @@ def diagonal(Start, Goal):
     return  cost_n * (d_max - d_min) + cost_d * d_min
 
 F = {
-    'manhattan': manhattan,
-    'euclidean': euclidean,
-    'diagonal': diagonal,
+    '1': manhattan,
+    '2': euclidean,
 }
 
 
@@ -169,20 +168,35 @@ class Maze():
         for _, point in enumerate(self.bonus_points):
             print(f'Bonus point at position (x, y) = {point[0], point[1]} with point {point[2]}')
 
-    def save_video(self, input_dir, algorithm):
-        dir_info = input_dir.split('/')       
-        output_dir = os.path.join(os.path.pardir, os.path.pardir, 'output')
+    def save_video(self, input_dir, algorithm, heuristic = None):
+        dir_info = input_dir.split('/')       # ../../input/level_1/map0.txt, astar, "..."
+
+        map_name = dir_info[-1].split('.')[0]
+        output_dir = os.path.join(os.path.pardir, os.path.pardir, 'output') #, map_name, algorithm)
+        # output/level_1/map1/algorithm/
 
         if not os.path.exists(output_dir):
             os.mkdir(output_dir)
+
+        output_dir = os.path.join(output_dir, map_name)
         
-        output_dir = os.path.join(output_dir, dir_info[-2])
         if not os.path.exists(output_dir):
             os.mkdir(output_dir)
+        
+        output_dir = os.path.join(output_dir, algorithm)
+        
+        if not os.path.exists(output_dir):
+            os.mkdir(output_dir)
+        # if not os.path.exists(output_dir):
+        #     os.mkdir(output_dir)
+        # file_output = open(os.path.join(output_dir, algorithm + '.txt'), "w")
         # plt.savefig(os.path.join(output_dir, dir_info[-1].split('.')[-2] + '.png'))
 
-        video = vidmaker.Video(os.path.join(output_dir, dir_info[-1].split('.')[-2] + '_' + algorithm + '.mp4'), late_export=True)
-        
+        if algorithm in ['astar', 'gbfs']:
+            video = vidmaker.Video(os.path.join(output_dir, algorithm + '_heuristic_' + heuristic + '.mp4'), late_export=True)
+        else:
+            video = vidmaker.Video(os.path.join(output_dir, algorithm + '.mp4'), late_export=True)
+
         clock = pygame.time.Clock()
         FPS = 60
 
@@ -220,7 +234,10 @@ class Maze():
                 time.sleep(1e-2)
                 video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
             
-
+            if algorithm in ['astar', 'gbfs']:
+                pygame.image.save(WIN, os.path.join(output_dir, algorithm + '_heuristic_' + heuristic + '.jpg'))
+            else:
+                pygame.image.save(WIN, os.path.join(output_dir, algorithm + '.jpg'))
             run = False
 
 
