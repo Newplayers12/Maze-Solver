@@ -2,7 +2,7 @@ from tokenize import Name
 from bfs import *
 from dfs import *
 from A_star import *
-from ucs import *
+from UCS import *
 from gbfs import *
 import sys
 import os

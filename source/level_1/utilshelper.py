@@ -140,16 +140,6 @@ def draw(win, grid, rows, width, height):
 
 
 def illustration_video(maze, save_img = False, input_dir = None):
-	def uscln(a, b):
-		temp1 = a
-		temp2 = b
-		while (temp1 != temp2):
-			if (temp1 > temp2):
-				temp1 -= temp2
-			else:
-				temp2 -= temp1
-		uscln = temp1
-		return uscln
 	# ROWS specify the length of mini square
 	HEIGHT = len(maze.matrix) * 15
 	WIDTH = len(maze.matrix[0]) * 15
@@ -184,10 +174,3 @@ def illustration_video(maze, save_img = False, input_dir = None):
 	# quit the windown
 	pygame.quit()
 	return WIN
-
-
-# function to draw illustration video
-# draw a maze
-# if __name__ == '__main__':
-# 	maze = Maze("input/level_1/map5.txt")
-# 	illustration_video(maze)

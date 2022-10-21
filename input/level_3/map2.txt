@@ -12,13 +12,13 @@
 XXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXX
 X +X     X   X+    X        +X    X
 X X XXXXX X X XXX X XXXXX XXX X X X
-X         X     X   X       X X X X
+X         X     X           X X X X
 X XXXXX XXXXX XXXXXXX XXXXXXXXX X X
 X   X     X   X X   X     X X   X X
 XXXXX XXXXXXXXX X XXXXX X XXXXXXX X
-X X X X       X         X     X+X X
+X X X         X         X     X+X X
 X X X XXX XXX X XXX XXXXXXXXXXX X X
-X   X X     X X X X X   X X     X X
+X   X X       X X   X   X X     X X
 X XXX XXX XXXXXXX X X X X XXX XXX X
 X X X X     X X   X X X X     X   X
 X X X XXX X X X X X XXX X XXXXXXX X
@@ -42,9 +42,9 @@ X       X       X X X X   X X     X
 XXXXXXXXX XXXXX+X XXX XXXXX XXX X X
 X X XX     X   X X X X X        XXX
 X X X XXX XXXXXXX X X XXXXXXX X X X
-X   X      +X     X     X  +X X X X
+X   X      +X           X  +X X X X
 X XXX X XXXXX XXXXXXX XXX XXX XXX X
-X X   X X X     X+  X      +X XS  X
+X X   X X       X+  X      +X XS  X
 X X X X X XXX XXXXX XXX XXXXXXXXX X
 X   X+X   X     X                 X
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 
