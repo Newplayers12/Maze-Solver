@@ -1,11 +1,9 @@
 from heapq import heappush, heappop
 from utils import Maze, Node, F, Heuristic_level_2
 from copy import deepcopy
-import sys
-sys.setrecursionlimit(10000)
+from queue import Queue
 
-
-class UCS_Node(Node):
+class ALGO_1_Node(Node):
     def __init__(self, state, parent, action):
         self.state = state
         self.parent = parent
@@ -38,39 +36,52 @@ class UCS_Node(Node):
     def updateHeuristic(self, goal, bonus_points):
         self.heuristic = Heuristic_level_2(self.state, goal, bonus_points)
 
-class UCS_Maze(Maze):
+class ALGO_1_Maze(Maze):
     def __init__(self):
         self.row = len(self.matrix)
         self.col = len(self.matrix[0])
         self.dist_maze = [[10**10 for i in range(self.col)] for i in range(self.row)]
-        input("Lam xong roi ne")
+    
+    def getDist(self, u):
+        return self.dist_maze[u[0]][u[1]]
+    
+    def updateDist(self, u, value):
+        self.dist_maze[u[0]][u[1]] = value
+    
+    def ALGO_1_MarkedNode(self): #, actions, path, u, list_points):
         
+        # id = 0
+        # for x, y, cost in list_points:
+        #     if (x, y) == u:
+        #         self.updateDist(u, self.getDist(u) + cost)
+        #         break
+        #     id += 1
+        # if (id != len(list_points)):
+        #     temp = list_points[id]
+        #     list_points.pop(id)
 
-    def ucsMarkedNode(self):
+        # self.draw_explored.append((child.state, PURPLE, len(self.bonus_points) - len(list_points)))
+
+
+        # self.draw_explored.append((child.state, WHITE, len(self.bonus_points)))
+
+
+        # for action, state in self.generateSuccessors(u):
+        #     if (self.getDist(state) <= self.getDist(u) + 1):
+        #         pass
+
+        # if (id != len(list_points)):
+        #     list_points.append(temp)
+        # return None
         
-        # initialize an empty explored set
-        """
-        def foo(Head):
-            flag[head] = True
-            for v in adj[head]:
-                
-                Reached, costPath = foo(v)
-                if (Reached == True):
-                    break
-
-            flag[head] = false
-            return Reached, costPath
-        """
+        
+        #######################################################################TRASH
         self.explored = set()
-        # Create List points copy
-        list_points = deepcopy(self.bonus_points)
-
+        
         # initialize start node
-        start = UCS_Node(self.start, parent=None, action=None)
+        start = ALGO_1_Node(self.start, parent=None, action=None)
         # start.updateHeuristic(self.goal, self.bonus_points)
-        # check if start node is the goal node
-        if start.state == self.goal:
-            return start
+        
 
         # contain the set of child node
         frontier = []
@@ -95,7 +106,7 @@ class UCS_Maze(Maze):
             for action, state in self.generateSuccessors(tempNode.state):
                 if state not in flag:
                     # initialzie a child node
-                    child = UCS_Node(state=state, parent=tempNode, action=action)
+                    child = ALGO_1_Node(state=state, parent=tempNode, action=action)
                     if child.state == self.goal:
                         return path_Ans + [child]
 
@@ -118,18 +129,17 @@ class UCS_Maze(Maze):
                     # self.draw_explored.append((child.state, GREY, số điểm đã qua))
         
         
-    def ucs_Search(self):
+    def ALGO_1_Search(self):
         action = []
         cells = []
+        ## Ý tưởng khác, chúng ta vẫn dùng BFS như thường, chỉ cần 
+        ## Cần phải chỉnh lại thành một cái DFS đệ quy để có thể đi một ô nhiều lần -> đồng thời thì cũng không có lưu quá nhiều thứ
+        self.dist_maze[self.start[0]][self.start[1]] = 0
+        list_points = deepcopy(self.bonus_points)
+        AnsActions, AnsCells = self.ALGO_1_MarkedNode(actions, cells, self.start, 0, list_points)
         
-        try:
-            ## Cần phải chỉnh lại thành một cái DFS đệ quy để có thể đi một ô nhiều lần -> đồng thời thì cũng không có lưu quá nhiều thứ
+        
+        self.solution = (list(map(lambda x:x.action, ListAns)), list(map(lambda x:x.state, ListAns)))
 
-            ListAns = self.ucsMarkedNode()        
-           
-            self.solution = (list(map(lambda x:x.action, ListAns)), list(map(lambda x:x.state, ListAns)))
-        except Exception as ex:
-            template = "An exception of type {0} occurred. Arguments:\n{1!r}"
-            message = template.format(type(ex).__name__, ex.args)
-            print(message)
-            input()
+        
+            

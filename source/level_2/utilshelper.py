@@ -191,6 +191,6 @@ def illustration_video(maze, save_img = False, input_dir = None):
 
 # function to draw illustration video
 # draw a maze
-if __name__ == '__main__':
-	maze = Maze("input/level_1/map5.txt")
-	illustration_video(maze)
+# if __name__ == '__main__':
+# 	maze = Maze("input/level_1/map5.txt")
+# 	illustration_video(maze)

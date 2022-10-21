@@ -31,7 +31,7 @@ if __name__ == '__main__':
     
     line_break()
     if len(sys.argv) != 4:
-        sys.exit("Usage: python main.py dfs level_1 map1.txt")
+        sys.exit("Usage: python main.py level_1 dfs ../../input/level_1/map0.txt")
 
     try:
         maze = None
@@ -54,17 +54,17 @@ if __name__ == '__main__':
         if sys.argv[2] == "gbfs":
             print('Test Level 1: Greedy Best First - Search Algorithms...')
             maze = GBF_Maze(sys.argv[3])
-            path_cost = maze.gbf_Search()
-
+            path_cost = maze.gbf_Search(sys.argv[4])
+            
         elif sys.argv[2] == "astar":
             print('Test Level 1: A* Search Algorithms...')
             maze = A_star_Maze(sys.argv[3])
-            path_cost = maze.A_star()
+            path_cost = maze.A_star(sys.argv[4])
     
         # win = illustration_video(maze, True, sys.argv[3])
 
-        maze.save_video(sys.argv[3], sys.argv[2])
-        write_output_file_txt(sys.argv[3], sys.argv[2], f"{path_cost}")
+        maze.save_video(sys.argv[3], sys.argv[2], sys.argv[4])
+        write_output_file_txt(sys.argv[3], sys.argv[2], sys.argv[4], f"{path_cost}")
         # maze.visualize_maze(False, sys.argv[3])
     except NameError as message:
         print("{}, outputed the result in output folder".format(message))

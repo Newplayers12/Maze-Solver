@@ -71,7 +71,7 @@ class A_star_Maze(Maze):
         frontier.add(start)
         self.draw_explored.append((start.state, 0))
         # Initialize an empty explored set
-        self.explored = set()
+        self.explored = set(start.state)
         
         # Keep looping until solution found
         while True:

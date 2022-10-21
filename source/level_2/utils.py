@@ -13,9 +13,6 @@ import time
 VIDEO_INDEX = 0
 
 
-    
-
-
 def manhattan(Start, Goal):
     return abs(Start[0] - Goal[0]) + abs(Start[1] - Goal[1])
 
@@ -31,7 +28,6 @@ def diagonal(Start, Goal):
     d_min = min(abs(Goal[0] - Start[0]), abs(Goal[1] - Start[1]))
     return  cost_n * (d_max - d_min) + cost_d * d_min
 
-#TO DO: Implement the heuristic functions for level 2
 def Heuristic_level_2(Start, Goal, bonus_points):
     res = (0, 0, 0)
     for x, y, point in bonus_points:
@@ -94,7 +90,7 @@ class Maze():
                     pass
                 else:
                     pass
-        f.close()
+        f.close() ## Remeber to close the file
     
     def generateSuccessors(self, state):
         row, col = state
@@ -200,7 +196,7 @@ class Maze():
         
         clock = pygame.time.Clock()
         FPS = 60
-
+        
         HEIGHT = self.shape[0] * 15
         WIDTH = self.shape[1] * 15
         ROWS = 15

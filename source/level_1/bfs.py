@@ -34,7 +34,7 @@ class BFS_Maze(Maze):
                 
             # take a node from set
             tempNode, cur_cost = frontier.get()
-            self.explored.add(tempNode.state)
+            # self.explored.add(tempNode.state)
             self.draw_explored.append((tempNode.state, 1))
             # self.solution.append(tempNode.action, tempNode.state)
             # self.num_explored += 1
