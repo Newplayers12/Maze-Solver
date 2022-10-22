@@ -1,4 +1,6 @@
+from distutils.command import check
 from heapq import heappush, heappop
+from math import fabs
 from utils import Maze, Node, F
 
 
@@ -36,6 +38,12 @@ class UCS_Node(Node):
 
 class UCS_Maze(Maze):
     def ucsMarkedNode(self):
+
+        def checkExist(frontier, state):
+            for x in frontier:
+                if state == x.state:
+                    return True
+            return False
     
         # initialize an empty explored set
         self.explored = set()
@@ -63,7 +71,10 @@ class UCS_Maze(Maze):
             self.draw_explored.append((tempNode.state, 1))
 
             for action, state in self.generateSuccessors(tempNode.state):
-                if state not in self.explored:
+                if state not in self.explored and not checkExist(frontier, state):
+                    for x in frontier:
+                        if state == x.state:
+                            return 
                     # initialzie a child node
                     child = UCS_Node(state=state, parent=tempNode, action=action)
                     if child.state == self.goal:
