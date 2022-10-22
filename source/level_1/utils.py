@@ -155,6 +155,10 @@ class Maze():
             if not os.path.exists(output_dir):
                 os.mkdir(output_dir)
             
+            output_dir = os.path.join(output_dir, 'level_1')
+            if not os.path.exists(output_dir):
+                os.mkdir(output_dir)
+            
             output_dir = os.path.join(output_dir, dir_info[-2])
             if not os.path.exists(output_dir):
                 os.mkdir(output_dir)
@@ -175,6 +179,10 @@ class Maze():
         output_dir = os.path.join(os.path.pardir, os.path.pardir, 'output') #, map_name, algorithm)
         # output/level_1/map1/algorithm/
 
+        if not os.path.exists(output_dir):
+            os.mkdir(output_dir)
+
+        output_dir = os.path.join(output_dir, 'level_1')
         if not os.path.exists(output_dir):
             os.mkdir(output_dir)
 

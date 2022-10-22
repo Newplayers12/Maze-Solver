@@ -1,14 +1,15 @@
-1
-1 5 -10000
-XXXXXXXXXX
-XXXXX+XXXX
-XXXXX XXXX
-XXXXX XXXX
-XXXXX XXXX
-XXXXX XXXX
-XXXXX XXXX
-XXXXX XXXX
-XXXXX XXXX
-XXXXX XXXX
-        SX
-XXXXXXXXXX
+2
+6 1 -20
+10 25 -1000
+XXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                        SX
+X                         X
+X                         X
+X                         X
+X                  X      X
+X+                 X      X
+X                  X      X
+X                  X      X
+X                  X      X
+                   X     +X
+XXXXXXXXXXXXXXXXXXXXXXXXXXX

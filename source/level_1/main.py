@@ -23,6 +23,11 @@ def write_output_file_txt(input_dir, algorithm, info, heuristic = None): # outpu
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
 
+    output_dir = os.path.join(output_dir, 'level_1')
+    
+    if not os.path.exists(output_dir):
+        os.mkdir(output_dir)
+
     output_dir = os.path.join(output_dir, map_name)
     
     if not os.path.exists(output_dir):

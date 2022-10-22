@@ -29,11 +29,12 @@ def diagonal(Start, Goal):
     return  cost_n * (d_max - d_min) + cost_d * d_min
 
 def Heuristic_level_2(Start, Goal, Bonus_point):
-    res = (0, 0, 0)
-    x, y = Bonus_point
-    first = point / (max(1, manhattan(Start, (x, y))))
-    second = point / (max(1, manhattan(Goal, (x, y))))
-    third = point / (max(1, manhattan(Start, (x, y)) + manhattan(Goal, (x, y))))
+    res = 0
+    # if not (Bonus_point): return 0
+    # maxx_points = max(list(map(lambda x: x[2], Bonus_point)))
+    for x, y, point in Bonus_point:
+        first = point / (manhattan(Start, (x, y)))
+        res = min(res, first)
         
     # the tuple is holding the minimum value from all bonus points
     # return a tuple of 3 values, (points / (dist from state to bonus_points), points/(dist from bonus_point to Goal), points / (Sum of those two distances))
@@ -166,7 +167,12 @@ class Maze():
 
             if not os.path.exists(output_dir):
                 os.mkdir(output_dir)
-            
+
+            output_dir = os.path.join(output_dir, 'level_2')
+
+            if not os.path.exists(output_dir):
+                os.mkdir(output_dir)
+
             output_dir = os.path.join(output_dir, dir_info[-2])
             if not os.path.exists(output_dir):
                 os.mkdir(output_dir)
@@ -181,19 +187,32 @@ class Maze():
             print(f'Bonus point at position (x, y) = {point[0], point[1]} with point {point[2]}')
 
     def save_video(self, input_dir, algorithm):
-        dir_info = input_dir.split('/')       
-        output_dir = os.path.join(os.path.pardir, os.path.pardir, 'output')
+        dir_info = input_dir.split('/')       # ../../input/level_1/map0.txt, astar, "..."
+
+        map_name = dir_info[-1].split('.')[0]
+        output_dir = os.path.join(os.path.pardir, os.path.pardir, 'output') #, map_name, algorithm)
+        # output/level_1/map1/algorithm/
 
         if not os.path.exists(output_dir):
             os.mkdir(output_dir)
+
+        output_dir = os.path.join(output_dir, 'level_1')
+        if not os.path.exists(output_dir):
+            os.mkdir(output_dir)
+
+        output_dir = os.path.join(output_dir, map_name)
         
-        output_dir = os.path.join(output_dir, dir_info[-2])
+        if not os.path.exists(output_dir):
+            os.mkdir(output_dir)
+        
+        output_dir = os.path.join(output_dir, algorithm)
+        
         if not os.path.exists(output_dir):
             os.mkdir(output_dir)
         # plt.savefig(os.path.join(output_dir, dir_info[-1].split('.')[-2] + '.png'))
 
-        video = vidmaker.Video(os.path.join(output_dir, dir_info[-1].split('.')[-2] + '_' + algorithm + '.mp4'), late_export=True)
-        
+        # video = vidmaker.Video(os.path.join(output_dir, dir_info[-1].split('.')[-2] + '_' + algorithm + '.mp4'), late_export=True)
+        video = vidmaker.Video(os.path.join(output_dir, algorithm + '.mp4'), late_export=True)
         clock = pygame.time.Clock()
         FPS = 60
         
@@ -218,22 +237,24 @@ class Maze():
 
             for x, y, cost in self.bonus_points:
                 Point(x, y, 15, 15, ROWS, LIGHT_PINK).draw(WIN)
-
-            for node, cnt, sd in self.draw_explored[2:]:
+            
+            for node, cnt in self.draw_explored[2:]:
                 # delta = len(self.draw_frontier) - len(self.draw_explored)
                 # if i > delta:
                 #     point = Point(self.draw_explored[i - delta][0], self.draw_explored[i - delta][1], 15, 15, ROWS, GREY)
                 #     point.draw(WIN)
-                point = Point(node[0], node[1], 15, 15, ROWS, ([x*(sd) //(len(self.bonus_points) + 1) for x in PURPLE]) if cnt == 1 else TURQUOISE)
+                point = Point(node[0], node[1], 15, 15, ROWS, ([x for x in PURPLE]) if cnt == 1 else TURQUOISE)
                 point.draw(WIN)
                 # time.sleep(1e-4)
                 video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
-
+            
             for i in range(len(self.solution[1])):
                 point = Point(self.solution[1][i][0], self.solution[1][i][1], 15, 15, ROWS, YELLOW)
                 point.draw(WIN)
                 time.sleep(1e-2)
                 video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
+                
+            pygame.image.save(WIN, os.path.join(output_dir, algorithm + '.jpg'))
             
 
             run = False

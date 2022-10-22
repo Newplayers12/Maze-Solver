@@ -1,9 +1,5 @@
 from tokenize import Name
-from bfs import *
-from dfs import *
-from A_star import *
-from UCS import *
-from GBF import *
+from algo1 import *
 import sys
 
 from utilshelper import illustration_video
@@ -12,16 +8,36 @@ def line_break():
     print("***"*20)
 
 def write_output_file_txt(input_dir, algorithm, info):
-    dir_info = input_dir.split('/')       
-    output_dir = os.path.join(os.path.pardir, os.path.pardir, 'output')
+    dir_info = input_dir.split('/')       # ../../input/level_1/map0.txt, astar, "..."
+
+    map_name = dir_info[-1].split('.')[0]
+    output_dir = os.path.join(os.path.pardir, os.path.pardir, 'output') #, map_name, algorithm)
+    # output/level_1/map1/algorithm/
 
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
+
+    output_dir = os.path.join(output_dir, 'level_1')
     
-    output_dir = os.path.join(output_dir, dir_info[-2])
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
-    file_output = open(os.path.join(output_dir, dir_info[-1].split('.')[-2] + '_' + algorithm + '.txt'), "w")
+
+    output_dir = os.path.join(output_dir, map_name)
+    
+    if not os.path.exists(output_dir):
+        os.mkdir(output_dir)
+    
+    output_dir = os.path.join(output_dir, algorithm)
+    
+    if not os.path.exists(output_dir):
+        os.mkdir(output_dir)
+    # if not os.path.exists(output_dir):
+    #     os.mkdir(output_dir)
+    if algorithm in ['astar', 'gbfs']:
+        file_output = open(os.path.join(output_dir, algorithm + '_heuristic_' + heuristic + '.txt'), "w")
+    else:
+        file_output = open(os.path.join(output_dir, algorithm + '.txt'), "w")
+    # file_output = open(os.path.join(output_dir, algorithm + '.txt'), "w")
     file_output.write(info)
     file_output.close()
 
@@ -36,13 +52,13 @@ if __name__ == '__main__':
         # Read in the maze
         maze = ALGO_1_Maze(sys.argv[3])
 
-        maze.ALGO_1_Search()
+        path_cost = maze.ALGO_1_Search()
             
         maze.save_video(sys.argv[3], sys.argv[2])
         write_output_file_txt(sys.argv[3], sys.argv[2], f"{path_cost}")
         # win = illustration_video(maze, True, sys.argv[3])
         # maze.visualize_maze(False, sys.argv[3])
-    except Exception as message:
+    except NameError as message:
         print("{}, outputed the result in output folder".format(message))
         write_output_file_txt(sys.argv[3], sys.argv[2], "NO")
     line_break()
