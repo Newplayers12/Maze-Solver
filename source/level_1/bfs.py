@@ -3,6 +3,29 @@ from utils import Maze
 from utils import Node
 
 
+class BFS_Queue():
+    def __init__(self):
+        self.List = []
+        self.Queue = Queue()
+        
+    def put(self, pair):
+        self.List.append(pair)
+        self.Queue.put(pair)
+
+    def get(self):
+        pair = self.Queue.get()
+        self.List.remove(pair)
+        return pair
+
+    def checkExistState(self, state):
+        for x in self.List:
+            if state == x[0]:
+                return True
+        return False
+
+    def empty(self):
+        return self.Queue.empty()
+
 class BFS_Maze(Maze):
     def bfsMarkedNode(self):
         """Find a solution to maze, if one exists"""
@@ -21,7 +44,7 @@ class BFS_Maze(Maze):
             return start
 
         # contain the set of child node
-        frontier = Queue()
+        frontier = BFS_Queue()
         frontier.put((start, 0))
         self.draw_explored.append((start.state, 0))
 
@@ -40,7 +63,7 @@ class BFS_Maze(Maze):
             # self.num_explored += 1
 
             for action, state in self.generateSuccessors(tempNode.state):
-                if state not in self.explored:
+                if state not in self.explored and not frontier.checkExistState(state):
                     # initialzie a child node
                     child = Node(state=state, parent=tempNode, action=action)
                     if child.state == self.goal:
