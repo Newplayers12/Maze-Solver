@@ -1,3 +1,4 @@
+from matplotlib.pyplot import bone
 from utils import *
 from re import L
 from tkinter import Widget
@@ -102,19 +103,25 @@ def make_grid(rows, width, height, maze):
 	gap1 = 15
 	gap2 = 15
 
+	bonus_points = []
+	for i in range(len(maze.bonus_points)):
+		bonus_points.append([])
+		for j in range(len(maze.bonus_points[0]) - 1):
+			bonus_points[i].append(maze.bonus_points[i][j])
+
 	for i in range(int(height / gap1)):
 		grid.append([])
 		for j in range(int( width/ gap2)):
 			if maze.start==(i,j):
-				point = Point(i, j, gap1, gap2, rows, ORANGE)
-			elif maze.goal==(i,j):
 				point = Point(i, j, gap1, gap2, rows, RED)
+			elif maze.goal==(i,j):
+				point = Point(i, j, gap1, gap2, rows, GREEN)
+			elif (i, j) in maze.solution[1] and [i, j] not in bonus_points:
+				point = Point(i, j, gap1, gap2, rows, YELLOW)
+			elif [i, j] in bonus_points:
+				point = Point(i, j, gap1, gap2, rows, LIGHT_PINK)
 			elif maze.matrix[i][j]=='X':
 				point = Point(i, j, gap1, gap2, rows, BLACK)
-			# elif (i, j) in maze.solution[1]:
-			# 	point = Point(i, j, gap1, gap2, rows, YELLOW)
-			elif (i, j) in maze.bonus_points:
-				point = Point(i, j, gap1, gap2, rows, PURPLE)
 			elif maze.matrix[i][j]==' ':
 				point = Point(i, j, gap1, gap2, rows, WHITE)
 

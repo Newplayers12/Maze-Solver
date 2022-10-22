@@ -182,7 +182,7 @@ class Maze():
         if not os.path.exists(output_dir):
             os.mkdir(output_dir)
 
-        output_dir = os.path.join(output_dir, 'level_1')
+        output_dir = os.path.join(output_dir, dir_info[-2])
         if not os.path.exists(output_dir):
             os.mkdir(output_dir)
 
@@ -215,16 +215,16 @@ class Maze():
         pygame.display.set_caption("Path Finding Algorithm")
         clock.tick(FPS)
         grid = make_grid(ROWS, WIDTH, HEIGHT, self)
-        video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
-        # for i in range(len(self.solution[1])):
-        #     point = Point(self.solution[1][i][0], self.solution[1][i][1], 15, 15, ROWS, YELLOW)
-        #     point.draw(WIN)
-        #     video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
-
+        
         run = True
         while run:           
             draw(WIN, grid, ROWS, WIDTH, HEIGHT)
             
+            for i in range(1, len(self.solution[1]) - 1):
+                point = Point(self.solution[1][i][0], self.solution[1][i][1], 15, 15, ROWS, WHITE)
+                point.draw(WIN)
+
+            video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
             
             for node, cnt in self.draw_explored[2:]:
                 # delta = len(self.draw_frontier) - len(self.draw_explored)
@@ -242,6 +242,9 @@ class Maze():
                 time.sleep(1e-2)
                 video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
             
+            Point(self.start[0], self.start[1], 15, 15, ROWS, RED).draw(WIN)
+            Point(self.goal[0], self.goal[1], 15, 15, ROWS, GREEN).draw(WIN)
+
             if algorithm in ['astar', 'gbfs']:
                 pygame.image.save(WIN, os.path.join(output_dir, algorithm + '_heuristic_' + heuristic + '.jpg'))
             else:
@@ -250,7 +253,7 @@ class Maze():
 
 
 
-        video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
+        # video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
         
         video.export(True)
         pygame.quit()

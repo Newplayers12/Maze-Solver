@@ -224,37 +224,72 @@ class Maze():
         pygame.display.set_caption("Path Finding Algorithm")
         clock.tick(FPS)
         grid = make_grid(ROWS, WIDTH, HEIGHT, self)
-        video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
-        # for i in range(len(self.solution[1])):
-        #     point = Point(self.solution[1][i][0], self.solution[1][i][1], 15, 15, ROWS, YELLOW)
-        #     point.draw(WIN)
-        #     video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
 
+
+    
         run = True
         while run:           
             draw(WIN, grid, ROWS, WIDTH, HEIGHT)
             
-            ## (a, b, c) * (cnt_points_through) // len(bonus_points)
+            # Change the color of the solution path from YELLOW to WHITE
+            for i in range(1, len(self.solution[1]) - 1):
+                flag = True # check if node in solution is a bonus_point
+                for j in range(len(self.bonus_points)):
+                    if self.solution[1][i][0] != self.bonus_points[j][0] or self.solution[1][i][1] != self.bonus_points[j][1]:
+                        point = Point(self.solution[1][i][0], self.solution[1][i][1], 15, 15, ROWS, WHITE)
+                        point.draw(WIN)
+                        flag = False
+                        break
+                if flag:
+                    point = Point(self.solution[1][i][0], self.solution[1][i][1], 15, 15, ROWS, LIGHT_PINK)
+                    point.draw(WIN)
+                    time.sleep(1e-2)
+
 
             for x, y, cost in self.bonus_points:
                 Point(x, y, 15, 15, ROWS, LIGHT_PINK).draw(WIN)
             
-            for node, cnt in self.draw_explored[2:]:
-                # delta = len(self.draw_frontier) - len(self.draw_explored)
-                # if i > delta:
-                #     point = Point(self.draw_explored[i - delta][0], self.draw_explored[i - delta][1], 15, 15, ROWS, GREY)
-                #     point.draw(WIN)
-                point = Point(node[0], node[1], 15, 15, ROWS, ([x for x in PURPLE]) if cnt == 1 else TURQUOISE)
-                point.draw(WIN)
-                # time.sleep(1e-4)
-                video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
+            # Start recording the video right here!!
+            video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
             
-            for i in range(len(self.solution[1])):
-                point = Point(self.solution[1][i][0], self.solution[1][i][1], 15, 15, ROWS, YELLOW)
-                point.draw(WIN)
-                time.sleep(1e-2)
-                video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
-                
+            
+            for node, cnt in self.draw_explored[2:]:
+                flag = True # check if node in draw_explored is a bonus_point
+                for j in range(len(self.bonus_points)):
+                    if node[0] == self.bonus_points[j][0] and node[1] == self.bonus_points[j][1]:
+                        point = Point(node[0], node[1], 15, 15, ROWS, ORANGE)
+                        point.draw(WIN)
+                        video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
+                        flag = False
+                        break
+                if flag:
+                    point = Point(node[0], node[1], 15, 15, ROWS, ([x for x in PURPLE]) if cnt == 1 else TURQUOISE)
+                    point.draw(WIN)
+                    # time.sleep(1e-4)
+                    video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
+            
+            for i in range(1, len(self.solution[1]) - 1):
+                flag = True # check if node in solution is a bonus_point
+                for j in range(len(self.bonus_points)):
+                    if self.solution[1][i][0] == self.bonus_points[j][0] and self.solution[1][i][1] == self.bonus_points[j][1]:
+                        point = Point(self.solution[1][i][0], self.solution[1][i][1], 15, 15, ROWS, ORANGE)
+                        point.draw(WIN)
+                        time.sleep(1e-2)
+                        video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
+                        flag = False
+                        break
+                if flag:
+                    point = Point(self.solution[1][i][0], self.solution[1][i][1], 15, 15, ROWS, YELLOW)
+                    point.draw(WIN)
+                    time.sleep(1e-2)
+                    video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
+            
+            
+            Point(self.start[0], self.start[1], 15, 15, ROWS, RED).draw(WIN)
+            Point(self.goal[0], self.goal[1], 15, 15, ROWS, GREEN).draw(WIN)
+            # video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
+
+
             pygame.image.save(WIN, os.path.join(output_dir, algorithm + '.jpg'))
             
 
@@ -267,7 +302,7 @@ class Maze():
 
 
 
-        video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
+        # video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
         
         video.export(True)
         pygame.quit()

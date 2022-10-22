@@ -103,15 +103,15 @@ def make_grid(rows, width, height, maze):
 		grid.append([])
 		for j in range(int( width/ gap2)):
 			if maze.start==(i,j):
-				point = Point(i, j, gap1, gap2, rows, ORANGE)
-			elif maze.goal==(i,j):
 				point = Point(i, j, gap1, gap2, rows, RED)
+			elif maze.goal==(i,j):
+				point = Point(i, j, gap1, gap2, rows, GREEN)
 			elif maze.matrix[i][j]=='X':
 				point = Point(i, j, gap1, gap2, rows, BLACK)
-			# elif (i, j) in maze.solution[1]:
-			# 	point = Point(i, j, gap1, gap2, rows, YELLOW)
-			elif (i, j) in maze.bonus_points:
-				point = Point(i, j, gap1, gap2, rows, PURPLE)
+			elif (i, j) in maze.solution[1]:
+				point = Point(i, j, gap1, gap2, rows, YELLOW)
+			# elif (i, j) in maze.bonus_points:
+			# 	point = Point(i, j, gap1, gap2, rows, PURPLE)
 			elif maze.matrix[i][j]==' ':
 				point = Point(i, j, gap1, gap2, rows, WHITE)
 
