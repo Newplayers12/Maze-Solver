@@ -8,7 +8,8 @@ class ALGO_1_Node(Node):
         self.state = state
         self.parent = parent
         self.action = action
-        self.list_points = -points
+
+        self.list_points = -points # số lượng điểm thưởng đã qua
         self.cost = self.parent.cost if self.parent else 0
         
         self.heuristic = 0
@@ -75,14 +76,11 @@ class ALGO_1_Maze(Maze):
         while frontier:
             # take a node from set
             tempNode = heappop(frontier)
-            # print(tempNode.heuristic, tempNode.cost)
-            # input()
+            
             self.explored.add(tempNode.state)
 
             self.draw_explored.append((tempNode.state, 1))
-            # self.solution.append(tempNode.action, tempNode.state)
-            # self.num_explored += 1
-
+            
             for action, state in self.generateSuccessors(tempNode.state):
                 if state not in self.explored:
                     # initialzie a child node
