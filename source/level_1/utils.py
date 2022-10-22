@@ -236,7 +236,7 @@ class Maze():
                 # time.sleep(1e-4)
                 video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
 
-            for i in range(len(self.solution[1])):
+            for i in range(1, len(self.solution[1]) - 1):
                 point = Point(self.solution[1][i][0], self.solution[1][i][1], 15, 15, ROWS, YELLOW)
                 point.draw(WIN)
                 time.sleep(1e-2)
