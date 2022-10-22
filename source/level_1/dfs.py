@@ -2,6 +2,29 @@ from utils import Node
 from utils import Maze
 from queue import LifoQueue
 
+class DFS_LifoQueue():
+    def __init__(self):
+        self.List=[]
+        self.Queue = LifoQueue()
+
+    def put(self, pair):
+        self.List.append(pair)
+        self.Queue.put(pair)
+    
+    def get(self):
+        pair = self.Queue.get()
+        self.List.remove(pair)
+        return pair
+
+    def checkExist(self, state):
+        for x in self.List:
+            if state == x[0]:
+                return True
+        return False
+
+    def empty(self):
+        return self.Queue.empty()
+    
 class DFS_Maze(Maze):
     def dfsMarkedNode(self):
         """Find a solution to maze, if one exists"""
@@ -20,7 +43,7 @@ class DFS_Maze(Maze):
             return start
 
         # contain the set of child node
-        frontier = LifoQueue()
+        frontier = DFS_LifoQueue()
         frontier.put((start, 0))
         self.explored.add(start.state)
         
@@ -38,7 +61,7 @@ class DFS_Maze(Maze):
             self.draw_explored.append((tempNode.state, 1))
 
             for action, state in self.generateSuccessors(tempNode.state):
-                if state not in self.explored:
+                if state not in self.explored and not frontier.checkExist(state):
                     # initialzie a child node
                     child = Node(state=state, parent=tempNode, action=action)
                     if child.state == self.goal:
