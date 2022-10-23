@@ -20,6 +20,7 @@ BLACK = (0, 0, 0)
 PURPLE = (128, 0, 128)
 ORANGE = (255, 165 ,0)
 GREY = (128, 128, 128)
+CYAN = (0, 221, 255)
 TURQUOISE = (64, 224, 208)
 LIGHT_PINK = (245, 54, 181)
 
@@ -97,6 +98,13 @@ class Point:
 	def __lt__(self, other):
 		return False
 
+
+def inSolution(start, sols):
+	for sol in sols:
+		if (start in sol[1]):
+			return True
+	return False
+
 def make_grid(rows, width, height, maze):
 	grid = []
 	print("size: ", width, height)
@@ -116,7 +124,7 @@ def make_grid(rows, width, height, maze):
 				point = Point(i, j, gap1, gap2, rows, RED)
 			elif maze.goal==(i,j):
 				point = Point(i, j, gap1, gap2, rows, GREEN)
-			elif (i, j) in maze.solution[1] and [i, j] not in bonus_points:
+			elif inSolution((i, j),  maze.solution) and [i, j] not in bonus_points:
 				point = Point(i, j, gap1, gap2, rows, YELLOW)
 			elif [i, j] in bonus_points:
 				point = Point(i, j, gap1, gap2, rows, LIGHT_PINK)
