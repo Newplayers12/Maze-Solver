@@ -1,15 +1,11 @@
-import sys
+from utilshelper import *
 import math
-from queue import PriorityQueue
-from queue import LifoQueue
-from queue import Queue
 import matplotlib.pyplot as plt
 import os
-os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
-import pygame
 import vidmaker
-from utilshelper import *
 import time
+
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 
 VIDEO_INDEX = 0
 
@@ -47,8 +43,10 @@ def diagonal(Start, Goal):
     :param Goal: The goal node
     :return: The cost of moving from Start to Goal.
     """
-    cost_n = 1 # cost of non-diagonal movement
-    cost_d = cost_n * math.sqrt(2) # cost of diagonal movement
+    # cost of non-diagonal movement
+    cost_n = 1 
+    # cost of diagonal movement
+    cost_d = cost_n * math.sqrt(2) 
     d_max = max(abs(Goal[0] - Start[0]), abs(Goal[1] - Start[1]))
     d_min = min(abs(Goal[0] - Start[0]), abs(Goal[1] - Start[1]))
     return  cost_n * (d_max - d_min) + cost_d * d_min
@@ -78,7 +76,6 @@ class Node():
 class Maze():
     def __init__(self, file_name):
         f=open(file_name,'r')
-
         # Reading the number of bonus points from the file and then reading the bonus points from the
         # file.
         n_bonus_points = int(next(f)[:-1])
@@ -98,9 +95,12 @@ class Maze():
         self.draw_explored = []
         # A list of nodes that are in the frontier, served for drawing the map.
         self.draw_frontier = []
-        self.start = None # start node of the map (maze)
-        self.goal = None # escape node of the map (maze)
-        self.walls = [] # walls of the map (notate: "X" in the input files)
+        # start node of the map (maze)
+        self.start = None 
+        # escape node of the map (maze)
+        self.goal = None 
+        # walls of the map (notate: "X" in the input files)
+        self.walls = [] 
 
         # Read the start and goal positions and the walls -> store in the object.
         for i in range(len(self.matrix)):

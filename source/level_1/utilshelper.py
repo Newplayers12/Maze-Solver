@@ -1,10 +1,5 @@
-from utils import *
 from re import L
-from tkinter import Widget
 import pygame
-import math
-from queue import PriorityQueue
-import os
 
 
 RED = (255, 0, 0)
