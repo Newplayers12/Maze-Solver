@@ -55,7 +55,7 @@ class ALGO_1_Maze(Maze):
     #     self.dist_maze[u[0]][u[1]] = value
     
     def ALGO_1_MarkedNode(self): #, actions, path, u, list_points):
-        #######################################################################TRASH
+        #######################################################################TRASH        
         self.explored = set()
         
         # initialize start node
@@ -90,7 +90,7 @@ class ALGO_1_Maze(Maze):
                         child.updateCost(1)
                         return child
 
-                    id = 0
+                    id = 0  
                     for x, y, cost in list_points:
                         if ((x, y) == child.state):
                             child.updateCost(cost)

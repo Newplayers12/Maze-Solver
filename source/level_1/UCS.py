@@ -61,8 +61,6 @@ class UCS_Maze(Maze):
         heappush(frontier, start)
         self.draw_explored.append((start.state, 0))
         
-        self.explored.add(start.state)
-
         # Loop untils the Heap is empty
         while frontier:
             # take a node from set
