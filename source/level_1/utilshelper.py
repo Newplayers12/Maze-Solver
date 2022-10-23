@@ -6,7 +6,6 @@ import math
 from queue import PriorityQueue
 import os
 
-pygame.display.set_caption("A* Path Finding Algorithm")
 
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
@@ -19,9 +18,20 @@ ORANGE = (255, 165 ,0)
 GREY = (128, 128, 128)
 TURQUOISE = (64, 224, 208)
 
-# start point; end point
+# > A `Point` object represents a point in 2-D space.
 class Point:
 	def __init__(self, row, col, width, height, total_rows, color):
+		"""
+		The function takes in the row, column, width, height, total_rows, and color of the cell and sets
+		the row, column, x, y, color, and neighbors of the cell
+		
+		:param row: the row of the grid the cell is in
+		:param col: the column of the grid
+		:param width: width of each cell
+		:param height: The height of each cell
+		:param total_rows: The total number of rows in the grid
+		:param color: the color of the pixel
+		"""
 		self.row = row
 		self.col = col
 		self.y = row * width
@@ -74,9 +84,19 @@ class Point:
 		self.color = PURPLE
 
 	def draw(self, win):
+		"""
+		It draws a rectangle of this point on the screen
+		
+		:param win: The window to draw the rectangle on
+		"""
 		pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.height))
 
 	def update_neighbors(self, grid):
+		"""
+		Generate the children nodes of this point.
+
+		:param grid: The grid that store the maze's node.
+		"""
 		self.neighbors = []
 		if self.row < self.total_rows - 1 and not grid[self.row + 1][self.col].is_barrier(): # DOWN
 			self.neighbors.append(grid[self.row + 1][self.col])
@@ -94,6 +114,16 @@ class Point:
 		return False
 
 def make_grid(rows, width, height, maze):
+	"""
+	It takes the maze, and creates a grid of points, where each point is a square, and the color of the
+	square is determined by the value of the point in the maze
+	
+	:param rows: number of rows in the maze
+	:param width: width of the maze
+	:param height: height of the maze
+	:param maze: the maze object
+	:return: A list of lists of points.
+	"""
 	grid = []
 	print("size: ", width, height)
 	gap1 = 15
@@ -110,8 +140,6 @@ def make_grid(rows, width, height, maze):
 				point = Point(i, j, gap1, gap2, rows, BLACK)
 			elif (i, j) in maze.solution[1]:
 				point = Point(i, j, gap1, gap2, rows, YELLOW)
-			# elif (i, j) in maze.bonus_points:
-			# 	point = Point(i, j, gap1, gap2, rows, PURPLE)
 			elif maze.matrix[i][j]==' ':
 				point = Point(i, j, gap1, gap2, rows, WHITE)
 
@@ -121,6 +149,15 @@ def make_grid(rows, width, height, maze):
 
 
 def draw_grid(win, rows, width, height):
+	"""
+	It draws a grid of lines on the window, with the number of rows and columns being equal to the
+	number of rows and columns in the grid
+	
+	:param win: The window to draw the grid on
+	:param rows: The number of rows in the grid
+	:param width: The width of the grid
+	:param height: The height of the window
+	"""
 	gap = width // rows
 	for i in range(rows):
 		pygame.draw.line(win, GREY, (0, i * gap), (width, i * gap))
@@ -129,48 +166,19 @@ def draw_grid(win, rows, width, height):
 
 
 def draw(win, grid, rows, width, height):
+	"""
+	It draws the grid
+	
+	:param win: The window that the grid is being drawn on
+	:param grid: The grid of points
+	:param rows: number of rows in the grid
+	:param width: The width of the window
+	:param height: The height of the window
+	"""
 	win.fill(WHITE)
 
 	for row in grid:
 		for Point in row:
 			Point.draw(win)
 
-	# draw_grid(win, rows, width, height)
 	pygame.display.update()
-
-
-def illustration_video(maze, save_img = False, input_dir = None):
-	# ROWS specify the length of mini square
-	HEIGHT = len(maze.matrix) * 15
-	WIDTH = len(maze.matrix[0]) * 15
-	ROWS = 15
-	WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-	pygame.display.set_caption("Path Finding Algorithm")
-
-	# make a grid by many mini squares
-	grid = make_grid(ROWS, WIDTH, HEIGHT, maze)
-
-	# use loops to increase and update map
-	run = True
-	while run:
-		draw(WIN, grid, ROWS, WIDTH, HEIGHT)
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				run = False
-			else:
-				pass
-	# Save the screenshot of pygame
-	if save_img:
-		dir_info = input_dir.split('/')       
-		output_dir = os.path.join(os.path.pardir, os.path.pardir, 'output')
-
-		if not os.path.exists(output_dir):
-			os.mkdir(output_dir)
-
-		output_dir = os.path.join(output_dir, dir_info[-2])
-		if not os.path.exists(output_dir):
-			os.mkdir(output_dir)
-		pygame.image.save(WIN, os.path.join(output_dir, dir_info[-1].split('.')[-2] + '.png'))
-	# quit the windown
-	pygame.quit()
-	return WIN

@@ -8,13 +8,12 @@ import sys
 import os
 
 
-from utilshelper import illustration_video
-
+# decorate the terminal when execute the program
 def line_break():
     print("***"*20)
 
-def write_output_file_txt(input_dir, algorithm, info, heuristic = None): # output/level_1/map1/algorithm/ ...*.txt *.mp4
-    dir_info = input_dir.split('/')       # ../../input/level_1/map0.txt, astar, "..."
+def write_output_file_txt(input_dir, algorithm, info, heuristic = None):
+    dir_info = input_dir.split('/')     
 
     map_name = dir_info[-1].split('.')[0]
     output_dir = os.path.join(os.path.pardir, os.path.pardir, 'output') #, map_name, algorithm)
@@ -37,23 +36,26 @@ def write_output_file_txt(input_dir, algorithm, info, heuristic = None): # outpu
     
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
-    # if not os.path.exists(output_dir):
-    #     os.mkdir(output_dir)
+
+    # add heuristic information to the name of output file 
+    # if the algorithm is A* search or Greedy best first search
     if algorithm in ['astar', 'gbfs']:
         file_output = open(os.path.join(output_dir, algorithm + '_heuristic_' + heuristic + '.txt'), "w")
     else:
         file_output = open(os.path.join(output_dir, algorithm + '.txt'), "w")
-    # file_output = open(os.path.join(output_dir, algorithm + '.txt'), "w")
+
     file_output.write(info)
     file_output.close()
 
 if __name__ == '__main__':
     
     line_break()
+    # check if the command is legal.
     if len(sys.argv) != 4 and len(sys.argv) != 5:
         sys.exit("Usage: python main.py level_1 dfs ../../input/level_1/map0.txt")
 
-    try:
+    # try to do the search algorithm up to the command argument.
+    try: 
         maze = None
         path_cost = 0
         if sys.argv[2] == "dfs":
@@ -81,7 +83,7 @@ if __name__ == '__main__':
             maze = A_star_Maze(sys.argv[3])
             path_cost = maze.A_star(sys.argv[4])
     
-            # win = illustration_video(maze, True, sys.argv[3])
+        # Write the path cost to the output file + render the path finding video.
         if sys.argv[2] in ['astar', 'gbfs']:
             write_output_file_txt(sys.argv[3], sys.argv[2], f"{path_cost}", sys.argv[4])
             maze.save_video(sys.argv[3], sys.argv[2], sys.argv[4])
@@ -89,6 +91,7 @@ if __name__ == '__main__':
             write_output_file_txt(sys.argv[3], sys.argv[2], f"{path_cost}")
             maze.save_video(sys.argv[3], sys.argv[2])
 
+    # Handle the case of can't find the solution.
     except NameError as message:
         print("{}, outputed the result in output folder".format(message))
         if sys.argv[2] in ['astar', 'gbfs']:
