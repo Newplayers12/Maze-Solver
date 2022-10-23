@@ -373,6 +373,7 @@ class Maze():
                     continue
                 if (self.solution[k][1][i] == self.goal):
                     Point(self.goal[0], self.goal[1], 15, 15, ROWS, GREEN).draw(WIN)
+                    continue
                 for j in range(len(self.bonus_points)):
                     if self.solution[k][1][i][0] == self.bonus_points[j][0] and self.solution[k][1][i][1] == self.bonus_points[j][1]:
                         point = Point(self.solution[k][1][i][0], self.solution[k][1][i][1], 15, 15, ROWS, ORANGE)

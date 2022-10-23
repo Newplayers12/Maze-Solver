@@ -2,7 +2,6 @@ from tokenize import Name
 from algo1 import *
 import sys
 
-from utilshelper import illustration_video
 
 # decorate the terminal when execute the program
 def line_break():

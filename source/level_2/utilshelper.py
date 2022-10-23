@@ -1,3 +1,6 @@
+"""
+tham khao: https://youtu.be/JtiK0DOeI4A
+"""
 from matplotlib.pyplot import bone
 from utils import *
 from re import L

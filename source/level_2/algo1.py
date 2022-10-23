@@ -106,7 +106,7 @@ class ALGO_1_Node(Node):
         :param goal: the goal state
         :param list_points: a list of points that are obstacles
         """
-        self.heuristic = Heuristic_level_2(self.state, goal, list_points)
+        self.heuristic = Heuristic_level_2(self.state, list_points)
 
 class ALGO_1_Maze(Maze):    
     def ALGO_1_MarkedNode(self):

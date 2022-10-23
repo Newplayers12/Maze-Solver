@@ -1,3 +1,6 @@
+"""
+tham khao: https://youtu.be/JtiK0DOeI4A
+"""
 from re import L
 import pygame
 

@@ -4,8 +4,6 @@ from bfs import *
 from utils import euclidean
 import sys
 
-from utilshelper import illustration_video
-
 # decorate the terminal when execute the program
 def line_break():
     print("***"*20)
