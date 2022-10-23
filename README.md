@@ -14,7 +14,7 @@ We will introduce briefly about our project:
 
 + This is our first lab (searching algorithms) for the **Fundamentals of AI** course.
 + This repo contains our implements for some algorithms: [A* search](source/level_1/A_star.py), [BFS](source/level_1/bfs.py), [DFS](source/level_1/dfs.py), [Greedy-Best first search](source/level_1/gbfs.py) and [Uniform-cost search](source/level_1/ucs.py).
-+ We also proposed the [algo1](source/level_2/algo.py) and the [algo2](source/level_3/algo2.py) to solve the maze that have bonus points and pick-up points along the way.
++ We also proposed the [algo1](source/level_2/algo1.py) and the [algo2](source/level_3/algo2.py) to solve the maze that have bonus points and pick-up points along the way.
 <!-- + Check out our API documentation here [docs/api-doc/](docs/api-doc/). -->
   
 <!-- <img src="images/documentation.png"> -->
