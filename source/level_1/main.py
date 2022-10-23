@@ -81,13 +81,17 @@ if __name__ == '__main__':
             maze = A_star_Maze(sys.argv[3])
             path_cost = maze.A_star(sys.argv[4])
     
-        # win = illustration_video(maze, True, sys.argv[3])
-        if sys.argv[2] in ['astar', 'gbfs']:
-            write_output_file_txt(sys.argv[3], sys.argv[2], f"{path_cost}", sys.argv[4])
-            maze.save_video(sys.argv[3], sys.argv[2], sys.argv[4])
-        else:
-            write_output_file_txt(sys.argv[3], sys.argv[2], f"{path_cost}")
-            maze.save_video(sys.argv[3], sys.argv[2])
+        try:
+            # win = illustration_video(maze, True, sys.argv[3])
+            if sys.argv[2] in ['astar', 'gbfs']:
+                write_output_file_txt(sys.argv[3], sys.argv[2], f"{path_cost}", sys.argv[4])
+                maze.save_video(sys.argv[3], sys.argv[2], sys.argv[4])
+            else:
+                write_output_file_txt(sys.argv[3], sys.argv[2], f"{path_cost}")
+                maze.save_video(sys.argv[3], sys.argv[2])
+        except Exception as message:
+            print("{}, outputed the result in output folder".format(message))
+            write_output_file_txt(sys.argv[3], sys.argv[2], "NO")
 
         # maze.visualize_maze(False, sys.argv[3])
     except NameError as message:

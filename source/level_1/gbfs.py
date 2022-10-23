@@ -1,3 +1,4 @@
+from distutils.command import check
 from heapq import heappush, heappop
 from utils import Maze, Node, F
 
@@ -38,6 +39,11 @@ class GBF_Node(Node):
 class GBF_Maze(Maze):
     def gbfMarkedNode(self, heuristic):
         
+        def checkExist(frontier, state):
+            for x in frontier:
+                if state == x.state:
+                    return True
+            return False
 
         # keep track of number of states explored
         # self.num_explored = 0
@@ -61,7 +67,7 @@ class GBF_Maze(Maze):
         self.explored.add(start.state)
 
         # Loop untils the Heap is empty
-        while len(frontier) > 0:
+        while frontier:
             
             # take a node from set
             tempNode = heappop(frontier)
@@ -71,7 +77,7 @@ class GBF_Maze(Maze):
             # self.num_explored += 1
 
             for action, state in self.generateSuccessors(tempNode.state):
-                if state not in self.explored:
+                if state not in self.explored and not checkExist(frontier, state):
                     # initialzie a child node
                     child = GBF_Node(state=state, parent=tempNode, action=action)
                     if child.state == self.goal:

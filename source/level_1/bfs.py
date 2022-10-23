@@ -67,7 +67,6 @@ class BFS_Maze(Maze):
                     # initialzie a child node
                     child = Node(state=state, parent=tempNode, action=action)
                     if child.state == self.goal:
-                        
                         return child, cur_cost + 1
                         
                     # child.updateCost()
