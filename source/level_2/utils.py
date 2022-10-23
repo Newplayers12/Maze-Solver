@@ -14,21 +14,56 @@ VIDEO_INDEX = 0
 
 
 def manhattan(Start, Goal):
+    """
+    > The heuristic function takes two tuples as input, and returns the sum of the absolute value of the
+    difference between the first elements of the tuples and the second elements of the tuples
+    
+    :param Start: The starting point of the path
+    :param Goal: The goal state
+    :return: The distance between the start and goal points.
+    """
     return abs(Start[0] - Goal[0]) + abs(Start[1] - Goal[1])
 
 def euclidean(Start, Goal):
+    """
+    > The heuristic function takes two points as input and returns the Euclidean distance between them
+    
+    :param Start: The starting point of the path
+    :param Goal: The goal position
+    :return: The distance between the start and goal points.
+    """
     dx = Goal[0] - Start[0]
     dy = Goal[1] - Start[1]
     return math.sqrt(dx*dx + dy * dy)
 
 def diagonal(Start, Goal):
-    cost_n = 1 # cost of non-diagonal movement
-    cost_d = cost_n * math.sqrt(2) # cost of diagonal movement
+    """
+    The diagonal heuristic function.
+    The cost of diagonal movement is the cost of non-diagonal movement times the square root of 2. The
+    cost of non-diagonal movement is the cost of diagonal movement divided by the square root of 2
+    
+    :param Start: The starting point of the path
+    :param Goal: The goal node
+    :return: The cost of moving from Start to Goal.
+    """
+    # cost of non-diagonal movement
+    cost_n = 1
+    # cost of diagonal movement
+    cost_d = cost_n * math.sqrt(2) 
     d_max = max(abs(Goal[0] - Start[0]), abs(Goal[1] - Start[1]))
     d_min = min(abs(Goal[0] - Start[0]), abs(Goal[1] - Start[1]))
     return  cost_n * (d_max - d_min) + cost_d * d_min
 
-def Heuristic_level_2(Start, Goal, Bonus_point):
+def Heuristic_level_2(Start, Bonus_point):
+    """
+    It takes the start state and the list of bonus points and returns the minimum value of the ratio of
+    the points to the distance from the start state to the bonus point
+    
+    :param Start: The current state
+    :param Bonus_point: a list of tuples, each tuple is a bonus point, the tuple is in the form of (x,
+    y, points)
+    :return: The minimum value from all bonus points
+    """
     res = 0
     # if not (Bonus_point): return 0
     # maxx_points = max(list(map(lambda x: x[2], Bonus_point)))
@@ -49,6 +84,14 @@ F = {
 
 class Node():
     def __init__(self, state, parent, action):
+        """
+        The function takes in a state, a parent, and an action, and returns a node with the state,
+        parent, and action.
+        
+        :param state: the state in the state space to which the node corresponds
+        :param parent: the node that generated this node
+        :param action: The action that was taken to get to this state
+        """
         self.state = state
         self.parent = parent
         self.action = action
@@ -58,23 +101,33 @@ class Node():
 class Maze():
     def __init__(self, file_name):
         f=open(file_name,'r')
+        # Reading the number of bonus points from the file and then reading the bonus points from the
+        # file.
         n_bonus_points = int(next(f)[:-1])
         self.bonus_points = []
         for i in range(n_bonus_points):
             x, y, reward = map(int, next(f).split())
             self.bonus_points.append((x, y, reward))
-        # input("Done")
 
+        # Reading the file and storing it in a matrix.
         text=f.read()
         self.matrix=[list(i) for i in text.splitlines()]
         f.close()
+        
+        # Getting the shape of the matrix.
         self.shape = [len(self.matrix), len(self.matrix[0])]
+        # A list of explored nodes, served for drawing the map.
         self.draw_explored = []
+        # A list of nodes that are in the frontier, served for drawing the map.
         self.draw_frontier = []
-        self.start = None
-        self.goal = None
-        self.walls = []
+        # start node of the map (maze)
+        self.start = None 
+        # escape node of the map (maze)
+        self.goal = None 
+        # walls of the map (notate: "X" in the input files)
+        self.walls = [] 
 
+        # Read the start and goal positions and the walls -> store in the object.
         for i in range(len(self.matrix)):
             for j in range(len(self.matrix[0])):
                 if self.matrix[i][j]=='S':
@@ -91,9 +144,23 @@ class Maze():
                     pass
                 else:
                     pass
-        f.close() ## Remeber to close the file
+        f.close()
     
     def generateSuccessors(self, state):
+        """
+        It takes a state (a tuple of (row, col) coordinates) and returns a list of (action, state)
+        pairs. 
+        
+        The action is one of "up", "down", "left", or "right". 
+        
+        The state is a new (row, col) tuple that is the result of moving in the specified direction. 
+        
+        The list of (action, state) pairs is empty if the state is a wall or if the state is outside the
+        grid
+        
+        :param state: The current state of the agent
+        :return: a list of tuples. Each tuple contains an action and a state.
+        """
         row, col = state
         candidates = [
             ("up", (row - 1, col)),
@@ -110,11 +177,12 @@ class Maze():
     
     def visualize_maze(self, save_img = False, input_dir = None):
         """
-        Args:
-        1. matrix: The matrix read from the input file,
-        2. bonus: The array of bonus points,
-        3. start, end: The starting and ending points,
-        4. route: The route from the starting point to the ending one, defined by an array of (x, y), e.g. route = [(1, 2), (1, 3), (1, 4)]
+        It's a function that draws the map and the route on a graph
+        (Source from TA... It seems useless because we've already
+         used the pygame library to draw the map in a more colorful way ¯\_( ͡° ͜ʖ ͡°)_/¯.)
+        
+        :param save_img: whether to save the image or not, defaults to False (optional)
+        :param input_dir: the directory of the input file
         """
         #1. Define walls and array of direction based on the route
         walls = self.walls
@@ -187,11 +255,19 @@ class Maze():
             print(f'Bonus point at position (x, y) = {point[0], point[1]} with point {point[2]}')
 
     def save_video(self, input_dir, algorithm):
-        dir_info = input_dir.split('/')       # ../../input/level_1/map0.txt, astar, "..."
+        """
+        > This function takes in a directory of input, an algorithm, and saves a video
+        of the algorithm running on the images
+        
+        :param input_dir: the directory where the input map is located
+        :param algorithm: the algorithm to be used for the map
+        """
+
+        # Example input: ../../input/level_2/map0.txt, astar
+        dir_info = input_dir.split('/')
 
         map_name = dir_info[-1].split('.')[0]
         output_dir = os.path.join(os.path.pardir, os.path.pardir, 'output') #, map_name, algorithm)
-        # output/level_1/map1/algorithm/
 
         if not os.path.exists(output_dir):
             os.mkdir(output_dir)
@@ -210,9 +286,7 @@ class Maze():
         
         if not os.path.exists(output_dir):
             os.mkdir(output_dir)
-        # plt.savefig(os.path.join(output_dir, dir_info[-1].split('.')[-2] + '.png'))
 
-        # video = vidmaker.Video(os.path.join(output_dir, dir_info[-1].split('.')[-2] + '_' + algorithm + '.mp4'), late_export=True)
         video = vidmaker.Video(os.path.join(output_dir, algorithm + '.mp4'), late_export=True)
         clock = pygame.time.Clock()
         FPS = 60
@@ -223,15 +297,18 @@ class Maze():
         WIN = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("Path Finding Algorithm")
         clock.tick(FPS)
+        # get the matrix information and store it in grid.
         grid = make_grid(ROWS, WIDTH, HEIGHT, self)
 
 
     
         run = True
-        while run:           
+        while run:    
+            # draw the pygame console window
             draw(WIN, grid, ROWS, WIDTH, HEIGHT)
             
             # Change the color of the solution path from YELLOW to WHITE
+            # refresh the solution to WHITE color, prepare to record the video.
             for i in range(1, len(self.solution[1]) - 1):
                 flag = True # check if node in solution is a bonus_point
                 for j in range(len(self.bonus_points)):
@@ -252,7 +329,7 @@ class Maze():
             # Start recording the video right here!!
             video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
             
-            
+            # draw explored nodes
             for node, cnt in self.draw_explored[2:]:
                 flag = True # check if node in draw_explored is a bonus_point
                 for j in range(len(self.bonus_points)):
@@ -268,6 +345,7 @@ class Maze():
                     # time.sleep(1e-4)
                     video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
             
+            # draw solution
             for i in range(1, len(self.solution[1]) - 1):
                 flag = True # check if node in solution is a bonus_point
                 for j in range(len(self.bonus_points)):
@@ -287,23 +365,12 @@ class Maze():
             
             Point(self.start[0], self.start[1], 15, 15, ROWS, RED).draw(WIN)
             Point(self.goal[0], self.goal[1], 15, 15, ROWS, GREEN).draw(WIN)
-            # video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
 
-
+            # save the final frame of the video into a image file.
             pygame.image.save(WIN, os.path.join(output_dir, algorithm + '.jpg'))
             
 
             run = False
-            # for event in pygame.event.get():
-            #     if event.type == pygame.QUIT:
-            #         run = False
-            #     else:
-            #         pass
 
-
-
-        # video.update(pygame.surfarray.pixels3d(WIN).swapaxes(0, 1), inverted=False)
-        
         video.export(True)
         pygame.quit()
-    

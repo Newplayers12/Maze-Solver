@@ -13,11 +13,18 @@ def line_break():
     print("***"*20)
 
 def write_output_file_txt(input_dir, algorithm, info, heuristic = None):
+    """
+    It creates a directory structure for the output file, and then writes the output file
+    
+    :param input_dir: The directory of the input file
+    :param algorithm: the name of the algorithm you want to run
+    :param info: the string that you want to write to the output file
+    :param heuristic: the heuristic function to use
+    """
     dir_info = input_dir.split('/')     
 
     map_name = dir_info[-1].split('.')[0]
-    output_dir = os.path.join(os.path.pardir, os.path.pardir, 'output') #, map_name, algorithm)
-    # output/level_1/map1/algorithm/
+    output_dir = os.path.join(os.path.pardir, os.path.pardir, 'output')
 
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)

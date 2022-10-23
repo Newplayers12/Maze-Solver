@@ -4,15 +4,22 @@ import sys
 
 from utilshelper import illustration_video
 
+# decorate the terminal when execute the program
 def line_break():
     print("***"*20)
 
 def write_output_file_txt(input_dir, algorithm, info):
-    dir_info = input_dir.split('/')       # ../../input/level_1/map0.txt, astar, "..."
+    """
+    It creates a directory structure for the output file, and then writes the output file
+    
+    :param input_dir: The directory of the input file
+    :param algorithm: the name of the algorithm
+    :param info: the string that you want to write to the file
+    """
+    dir_info = input_dir.split('/')
 
     map_name = dir_info[-1].split('.')[0]
-    output_dir = os.path.join(os.path.pardir, os.path.pardir, 'output') #, map_name, algorithm)
-    # output/level_1/map1/algorithm/
+    output_dir = os.path.join(os.path.pardir, os.path.pardir, 'output')
 
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
@@ -31,21 +38,19 @@ def write_output_file_txt(input_dir, algorithm, info):
     
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
-    # if not os.path.exists(output_dir):
-    #     os.mkdir(output_dir)
-    if algorithm in ['astar', 'gbfs']:
-        file_output = open(os.path.join(output_dir, algorithm + '_heuristic_' + heuristic + '.txt'), "w")
-    else:
-        file_output = open(os.path.join(output_dir, algorithm + '.txt'), "w")
-    # file_output = open(os.path.join(output_dir, algorithm + '.txt'), "w")
+
+    file_output = open(os.path.join(output_dir, algorithm + '.txt'), "w")
     file_output.write(info)
     file_output.close()
 
 
 if __name__ == '__main__':
     line_break()
+    # check if the command is legal.
     if len(sys.argv) != 4:
         sys.exit("Usage: python main.py level_2 algo1 ../../input/level_2/map1.txt")
+    
+    # try to do the algo1.
     try:
         maze = None
         print('Test Level 2: Algorithm - 1 - Search Algorithm...')
@@ -56,8 +61,7 @@ if __name__ == '__main__':
             
         maze.save_video(sys.argv[3], sys.argv[2])
         write_output_file_txt(sys.argv[3], sys.argv[2], f"{path_cost}")
-        # win = illustration_video(maze, True, sys.argv[3])
-        # maze.visualize_maze(False, sys.argv[3])
+
     except NameError as message:
         print("{}, outputed the result in output folder".format(message))
         write_output_file_txt(sys.argv[3], sys.argv[2], "NO")

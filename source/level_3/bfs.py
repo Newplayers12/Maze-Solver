@@ -28,8 +28,14 @@ class BFS_Queue():
 
 class BFS_Maze(Maze):
     def bfsMarkedNode(self, S, E):
-        """Find a solution to maze, if one exists"""
-
+        """
+        The function takes in the start node and the goal node, and returns the goal node and the cost
+        of the path from the start node to the goal node
+        
+        :param S: the start node
+        :param E: The goal state
+        :return: the goal node and the cost of the path.
+        """
         # initialize an empty explored set
         self.explored = set()
 
@@ -54,8 +60,7 @@ class BFS_Maze(Maze):
                 
             # take a node from set
             tempNode, cur_cost = frontier.get()
-            
-
+        
             for action, state in self.generateSuccessors(tempNode.state):
                 if state not in self.explored and not frontier.checkExistState(state):
                     # initialzie a child node
@@ -68,6 +73,13 @@ class BFS_Maze(Maze):
                     self.explored.add(child.state)
 
     def bfs_Search(self, S, E):
+        """
+        It returns the path cost of the shortest path from the start node to the end node.
+        
+        :param S: Start node
+        :param E: End node
+        :return: The path cost of the shortest path from the start node to the end node.
+        """
         tempNode, path_cost = self.bfsMarkedNode(S, E)
         return path_cost
         
