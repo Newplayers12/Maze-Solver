@@ -5,7 +5,7 @@
 23 17 0
 25 27 0
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-  X X     X+          X   X   X
+           +          X   X   X
 X X XXX XXXXXXX X XXX X X X XXX
 X X       X   X X   X   X   X X
 X XXXXX X X XXX XXXXX X XXX X X
@@ -26,8 +26,8 @@ X XXX X XXXXXXX XXX X+XXX X X X
 X X X       X    XX   X   X   X
 XXX X XXXXXXXXX X X X XXXXXXX X
 X       X X X   X X+X     X   X
-XXX XXXXX X X X X XXXXXXX X XXX
-X X         X X X+X     X X   X
+XXX XXXXX X X X X X XXXXX X XXX
+X X         X X X+      X X   X
 X X XXXXXXX XXX XXX X X XXXXXXX
 X X       X   X X   X X X  +X X
 X X XXXXXXXXXXX XXX XXX X XXX X

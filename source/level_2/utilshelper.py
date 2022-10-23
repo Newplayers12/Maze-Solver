@@ -1,7 +1,7 @@
 from matplotlib.pyplot import bone
 from utils import *
 from re import L
-from tkinter import Widget
+
 import pygame
 import math
 from queue import PriorityQueue
