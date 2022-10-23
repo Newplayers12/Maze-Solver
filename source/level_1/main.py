@@ -92,6 +92,9 @@ if __name__ == '__main__':
         # maze.visualize_maze(False, sys.argv[3])
     except NameError as message:
         print("{}, outputed the result in output folder".format(message))
-        write_output_file_txt(sys.argv[3], sys.argv[2], "NO")
+        if sys.argv[2] in ['astar', 'gbfs']:
+            write_output_file_txt(sys.argv[3], sys.argv[2], "NO", sys.argv[4])
+        else:
+            write_output_file_txt(sys.argv[3], sys.argv[2], "NO")
         
     line_break()
