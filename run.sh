@@ -34,7 +34,6 @@ python main.py level_1 ucs ../../input/level_1/map0.txt
 
 echo Doing the GBF Algorithm with Manhattan
 python main.py level_1 gbfs ../../input/level_1/map0.txt 1
-<<<<<<< HEAD
 # python main.py level_1 gbfs ../../input/level_1/map1.txt 1
 # python main.py level_1 gbfs ../../input/level_1/map2.txt 1
 # python main.py level_1 gbfs ../../input/level_1/map3.txt 1
@@ -45,7 +44,6 @@ python main.py level_1 gbfs ../../input/level_1/map0.txt 1
 
 echo Doing the GBF Algorithm with Euclidean
 python main.py level_1 gbfs ../../input/level_1/map0.txt 2
-=======
 # python main.py level_1 gbfs ../../input/level_1/map1.txt 2
 # python main.py level_1 gbfs ../../input/level_1/map2.txt 2
 # python main.py level_1 gbfs ../../input/level_1/map3.txt 2
@@ -54,10 +52,8 @@ python main.py level_1 gbfs ../../input/level_1/map0.txt 2
 # python main.py level_1 gbfs ../../input/level_1/map6.txt 2
 
 
-<<<<<<< HEAD
 echo Doing the A\* algorithm with Manhattan
 python main.py level_1 astar ../../input/level_1/map0.txt 1
-=======
 # python main.py level_1 astar ../../input/level_1/map1.txt 1
 # python main.py level_1 astar ../../input/level_1/map2.txt 1
 # python main.py level_1 astar ../../input/level_1/map3.txt 1
@@ -65,10 +61,8 @@ python main.py level_1 astar ../../input/level_1/map0.txt 1
 # python main.py level_1 astar ../../input/level_1/map5.txt 1
 # python main.py level_1 astar ../../input/level_1/map6.txt 1
 
-<<<<<<< HEAD
 echo Doing the A\* algorithm with Euclidean
 python main.py level_1 astar ../../input/level_1/map0.txt 2
-=======
 # python main.py level_1 astar ../../input/level_1/map1.txt 2
 # python main.py level_1 astar ../../input/level_1/map2.txt 2
 # python main.py level_1 astar ../../input/level_1/map3.txt 2
