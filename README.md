@@ -25,7 +25,7 @@ We will introduce briefly about our project:
 |   Student ID   |            Name               | Profile 
 |----------------|-------------------------------|----------------------------
 |    20120028    |Huynh Le An | [@leanhuynh](https://github.com/leanhuynh)            
-|    20120476    |Nhan Gia Kham | [@Newplayers12](https://github.com/Newplayers12)           
+|    20120504    |Nhan Gia Kham | [@Newplayers12](https://github.com/Newplayers12)           
 |    20120596    |Nguyen Bao Tin | [@nbtin](https://github.com/nbtin)
 
 <h5 id="install"></h5>
