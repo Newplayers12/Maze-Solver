@@ -1,5 +1,7 @@
 # Maze-solver
 
+<img src="imgs/demo_maze.png">
+
 **Content:**
 <ul style="list-style-type: none">
     <li><a href="#about">About us</a></li>
@@ -85,4 +87,8 @@ run.sh
 
 <img src="imgs/algo2.gif">
 
- 
+## Final Notes
+
+**Thanks for going through this Repository! Have a nice day.**
+
+Got any queries? Feel free to contact us via <a href = "mailto: baotin2402@gmail.com">E-mail</a>.
