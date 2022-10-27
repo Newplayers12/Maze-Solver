@@ -16,7 +16,7 @@ We will introduce briefly about our project:
 
 + This is our first lab (searching algorithms) for the **Fundamentals of AI** course.
 + This repo contains our implements for some algorithms: [A* search](https://en.wikipedia.org/wiki/A*_search_algorithm), [BFS](https://en.wikipedia.org/wiki/Breadth-first_search), [DFS](https://en.wikipedia.org/wiki/Depth-first_search), [Greedy-Best first search](https://en.wikipedia.org/wiki/Best-first_search#Greedy_BFS) and [Uniform-cost search](https://www.geeksforgeeks.org/uniform-cost-search-dijkstra-for-large-graphs/).
-+ We also proposed the [algo1](source/level_2/algo1.py) and the [algo2](source/level_3/algo2.py) to solve the maze that have bonus points and pick-up points along the way.
++ We also proposed 2 algorithms: the **algo1** and the **algo2** to solve the maze that have bonus points and pick-up points along the way.
 <!-- + Check out our API documentation here [docs/api-doc/](docs/api-doc/). -->
   
 <!-- <img src="images/documentation.png"> -->
